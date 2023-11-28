@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 55,
     fontWeight: "bold",
-    color: "white",
+    color: "red",
     marginBottom: 10,
   },
   slogan: {
