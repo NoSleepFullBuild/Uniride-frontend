@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App"; // Assurez-vous que le chemin d'importation est correct
+import { RootStackParamList } from "../App";
 
 // Définissez les props en fonction du type de navigation de votre pile
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
@@ -20,7 +20,7 @@ type Props = {
 const HomeScreen = ({ navigation }: Props) => {
   return (
     <ImageBackground
-      source={require("../../picture.jpg")}
+      source={require("../assets/login/bg.jpg")}
       style={styles.background}
     >
       <View style={styles.overlay}>
@@ -31,13 +31,13 @@ const HomeScreen = ({ navigation }: Props) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => navigation.navigate("Login")} // Utilisez navigation au lieu de onLogin
+              onPress={() => navigation.navigate("Login")}
             >
               <Text style={styles.loginButtonText}>Me connecter</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.registerButton}
-              onPress={() => navigation.navigate("Register")} // Utilisez navigation au lieu de onRegister
+              onPress={() => navigation.navigate("Register")}
             >
               <Text style={styles.registerButtonText}>Commencer</Text>
             </TouchableOpacity>

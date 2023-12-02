@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App"; // Assurez-vous que le chemin d'importation est correct
+import { RootStackParamList } from "../../App";
 
 // Définissez les props en fonction du type de navigation de votre pile
 type RegisterScreenNavigationProp = StackNavigationProp<
@@ -48,39 +48,35 @@ const RegisterScreen = ({ navigation }: Props) => {
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <TextInput
-              style={styles.input}
-              placeholder="Votre nom"
-              autoCorrect={false}
-              autoFocus
+            style={styles.input}
+            placeholder="Votre nom"
+            autoCorrect={false}
+            autoFocus
           />
         </View>
       </View>
-      
 
-      
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <TextInput
-              style={styles.input}
-              placeholder="Votre prénom"
-              autoCorrect={false}
-              autoFocus
+            style={styles.input}
+            placeholder="Votre prénom"
+            autoCorrect={false}
+            autoFocus
           />
         </View>
       </View>
 
-      
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
           <TextInput
-              style={styles.input}
-              placeholder="Votre numéro de téléphone"
-              autoCorrect={false}
-              autoFocus
+            style={styles.input}
+            placeholder="Votre numéro de téléphone"
+            autoCorrect={false}
+            autoFocus
           />
         </View>
       </View>
-
 
       <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
         <Text style={styles.inscriptionText}> Poursuivre </Text>
@@ -96,20 +92,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputContainer: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    paddingHorizontal:10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderRadius: 10,
-
     width: "80%",
-    marginBottom: 25, // Ajustez en fonction de votre design
+    marginBottom: 25,
   },
   inputWrapper: {
     flex: 1,
-    borderRadius: 10 // La valeur de borderRadius que vous voulez
-    // Ajoutez des ombres si nécessaire
+    borderRadius: 10,
   },
   header: {
     flexDirection: "row",
@@ -154,10 +148,10 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   input: {
-    height: 40, // Définissez une hauteur pour les inputs
-    borderRadius: 10, // Assurez-vous que cette valeur est la même que celle du inputWrapper pour que le border radius s'applique correctement
+    height: 40,
+    borderRadius: 10,
     fontSize: 15,
-    color: '#333', 
+    color: "#333",
   },
   loginContainer: {
     flexDirection: "row",

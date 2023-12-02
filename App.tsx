@@ -3,12 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./components/screen/HomeScreen";
+import HomeScreen from "./screen/HomeScreen";
 
 import RegisterScreen from "./components/register/RegisterScreen";
 import RegisterScreen2 from "./components/register/RegisterScreen2";
 
-import LoginScreen from "./components/screen/LoginScreen";
+import LoginScreen from "./screen/LoginScreen";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -29,9 +29,8 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="RegisterSecond"  component={RegisterScreen2} />
+          <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
           <Stack.Screen name="Login" component={LoginScreen} />
-          
         </Stack.Navigator>
         <StatusBar style="auto" />
       </View>
