@@ -27,7 +27,7 @@ const RegisterScreen = ({ navigation }: Props) => {
   };
 
   const handleRegister = () => {
-    navigation.replace("RegisterSecond");
+    navigation.push("RegisterSecond");
   };
 
   return (

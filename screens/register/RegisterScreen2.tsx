@@ -11,14 +11,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
 // Définissez les props en fonction du type de navigation de votre pile
-type RegisterScreenNavigationProp = StackNavigationProp<
+type RegisterSecondScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Register"
+  "RegisterSecond"
 >;
 
 // Types pour les props du composant
 type Props = {
-  navigation: RegisterScreenNavigationProp;
+  navigation: RegisterSecondScreenNavigationProp;
 };
 
 const RegisterScreen2 = ({ navigation }: Props) => {
@@ -33,7 +33,7 @@ const RegisterScreen2 = ({ navigation }: Props) => {
   };
 
   const handleRegister = () => {
-    navigation.replace("Home");
+    //navigation.replace("Home");
   };
 
   return (

@@ -9,14 +9,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
 // Définissez les props en fonction du type de navigation de votre pile
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type ConnexionScreenNavigationProp = StackNavigationProp<RootStackParamList, "Connexion">;
 
 // Types pour les props du composant
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: ConnexionScreenNavigationProp;
 };
 
-const HomeScreen = ({ navigation }: Props) => {
+const ConnexionScreen = ({ navigation }: Props) => {
   return (
     <ImageBackground
       source={require("../../assets/login/bg.jpg")}
@@ -57,4 +57,4 @@ const HomeScreen = ({ navigation }: Props) => {
   );
 };
 
-export default HomeScreen;
+export default ConnexionScreen;

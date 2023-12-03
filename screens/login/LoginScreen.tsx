@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
@@ -14,7 +14,7 @@ type Props = {
 
 const LoginScreen = ({ navigation }: Props) => {
   const handleLogin = () => {
-    navigation.replace("Home");
+    //navigation.replace("Home");
   };
 
   return (
