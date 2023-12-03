@@ -3,12 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screen/HomeScreen";
+import HomeScreen from "./screens/home/HomeScreen";
 
 import RegisterScreen from "./components/register/RegisterScreen";
 import RegisterScreen2 from "./components/register/RegisterScreen2";
 
-import LoginScreen from "./screen/LoginScreen";
+import LoginScreen from "./screens/login/LoginScreen";
 
 export type RootStackParamList = {
   Home: undefined;

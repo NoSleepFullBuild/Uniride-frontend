@@ -7,7 +7,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../../App";
 
 // Définissez les props en fonction du type de navigation de votre pile
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;

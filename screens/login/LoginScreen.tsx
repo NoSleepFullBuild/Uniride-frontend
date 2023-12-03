@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../../App";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
