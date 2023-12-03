@@ -69,8 +69,8 @@ const RegisterScreen2 = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity className="bg-black py-3.5 px-8 rounded-full ml-1.25 mt-5 w-4/5" onPress={handleRegister}>
-        <Text className="text-base text-white text-center"> S'inscrire </Text>
+      <TouchableOpacity className="bg-black py-3.5 px-8 rounded-full ml-1.25 mt-3 w-4/5" onPress={handleRegister}>
+        <Text className="text-base text-white text-center">S'inscrire</Text>
       </TouchableOpacity>
     </View>
   );
