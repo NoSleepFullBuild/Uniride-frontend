@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
@@ -23,137 +17,52 @@ const LoginScreen = ({ navigation }: Props) => {
     navigation.replace("Home");
   };
 
-  const phoneInputRef = useRef(null);
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View className="flex-1 items-center pt-20">
+      <View className="flex-row self-stretch items-center justify-start mb-5 pl-10">
         <TouchableOpacity
-          style={styles.backButton}
+          className="mr-2.5"
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backArrow}>←</Text>
+          <Text className="text-2xl text-black">←</Text>
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.title}>Me connecter</Text>
-
-      <TextInput autoFocus style={styles.input} placeholder="Votre email" />
+      <Text className="self-stretch items-center justify-start pl-10 text-2xl pb-5 mt-5">
+        Me connecter
+      </Text>
 
       <TextInput
-        style={styles.input}
+        autoFocus
+        className="w-4/5 p-2.5 border border-gray-400 rounded mb-2.5"
+        placeholder="Votre email"
+      />
+
+      <TextInput
+        className="w-4/5 p-2.5 border border-gray-400 rounded mb-2.5"
         placeholder="Votre mot de passe"
         secureTextEntry
       />
 
       <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
+        <Text className="mt-1.5 mb-2.5 underline">Mot de passe oublié ?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.connectText}>Me connecter</Text>
+      <TouchableOpacity
+        className="bg-black py-3.5 px-8 mt-5 rounded-full w-4/5 items-center"
+        onPress={handleLogin}
+      >
+        <Text className="text-base text-white">Me connecter</Text>
       </TouchableOpacity>
 
-      <View style={styles.registerContainer}>
+      <View className="flex-row items-center mt-2.5">
         <Text>Pas encore de compte ?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-          <Text style={styles.registerLink}>M'inscrire</Text>
+          <Text className="ml-1 underline">M'inscrire</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: "20%",
-    alignItems: "center",
-  },
-  header: {
-    flexDirection: "row",
-    alignSelf: "stretch",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginBottom: 20,
-    paddingLeft: "11%",
-  },
-  backButton: {
-    marginRight: 10,
-  },
-  backArrow: {
-    fontSize: 24,
-    color: "#000",
-  },
-  phoneInput: {
-    height: 50,
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    marginBottom: 20,
-    paddingHorizontal: 10,
-  },
-  title: {
-    flexDirection: "row",
-    alignSelf: "stretch",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingLeft: "10%",
-    fontSize: 24,
-    paddingBottom: 20,
-    marginTop: 20,
-  },
-  input: {
-    width: "80%",
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  login: {
-    backgroundColor: "#000000",
-    paddingVertical: 15,
-    paddingHorizontal: "8%",
-    borderRadius: 30,
-    marginLeft: 10,
-  },
-  passwordContainer: {
-    alignSelf: "stretch",
-    alignItems: "flex-end",
-    paddingRight: "10%",
-    paddingBottom: 10,
-  },
-  passwordInput: {
-    marginBottom: 0,
-  },
-  forgotPassword: {
-    marginTop: 5,
-    marginBottom: 10,
-    textDecorationLine: "underline",
-  },
-  loginButton: {
-    backgroundColor: "#000000",
-    paddingVertical: 15,
-    paddingHorizontal: "8%",
-    marginTop: 20,
-    borderRadius: 30,
-    width: "80%",
-    alignItems: "center",
-  },
-  connectText: {
-    fontSize: 15,
-    color: "#fff",
-  },
-  registerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  registerLink: {
-    marginLeft: 5,
-    textDecorationLine: "underline",
-  },
-});
 
 export default LoginScreen;

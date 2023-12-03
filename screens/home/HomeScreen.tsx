@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
   ImageBackground,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -20,26 +19,36 @@ type Props = {
 const HomeScreen = ({ navigation }: Props) => {
   return (
     <ImageBackground
-      source={require("../assets/login/bg.jpg")}
-      style={styles.background}
+      source={require("../../assets/login/bg.jpg")}
+      className="flex-1 bg-cover bg-center justify-center"
     >
-      <View style={styles.overlay}>
-        <View style={styles.div}>
-          <Text style={styles.title}>Uniride</Text>
-          <Text style={styles.slogan}>Partenaires d'étude,</Text>
-          <Text style={styles.slogan2}>Compagnons de route.</Text>
-          <View style={styles.buttonContainer}>
+      <View className="flex-1 bg-black opacity-70">
+        <View className="flex-1 justify-center pl-7 mt-[90%]">
+          <Text className="text-6xl font-bold text-white mb-2.5">
+            Uniride
+          </Text>
+          <Text className="mt-2.5 text-xl text-white">
+            Partenaires d'étude,
+          </Text>
+          <Text className="text-3xl font-bold text-white">
+            Compagnons de route.
+          </Text>
+          <View className="flex-row justify-between mt-10">
             <TouchableOpacity
-              style={styles.loginButton}
+              className="bg-transparent py-3.5 px-7 border border-white rounded-full mr-5"
               onPress={() => navigation.navigate("Login")}
             >
-              <Text style={styles.loginButtonText}>Me connecter</Text>
+              <Text className="text-base text-white text-center">
+                Me connecter
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={styles.registerButton}
+              className="bg-white py-3.5 px-7 border border-white rounded-full mr-5"
               onPress={() => navigation.navigate("Register")}
             >
-              <Text style={styles.registerButtonText}>Commencer</Text>
+              <Text className="text-base text-black text-center">
+                Commencer
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -47,69 +56,5 @@ const HomeScreen = ({ navigation }: Props) => {
     </ImageBackground>
   );
 };
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.3)",
-  },
-  div: {
-    flex: 1,
-    justifyContent: "center",
-    paddingLeft: 30,
-    marginTop: "90%",
-  },
-  title: {
-    fontSize: 55,
-    fontWeight: "bold",
-    color: "red",
-    marginBottom: 10,
-  },
-  slogan: {
-    marginTop: 10,
-    fontSize: 20,
-    color: "white",
-  },
-  slogan2: {
-    fontSize: 25,
-    color: "white",
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    spaceBetween: "space-between",
-    marginTop: 40,
-  },
-  registerButton: {
-    backgroundColor: "#ffffff",
-    paddingVertical: 15,
-    paddingHorizontal: "8%",
-    borderRadius: 30,
-    marginLeft: 10,
-  },
-  registerButtonText: {
-    fontSize: 15,
-    color: "#000",
-    textAlign: "center",
-  },
-  loginButton: {
-    backgroundColor: "transparent",
-    paddingVertical: 15,
-    paddingHorizontal: "7%",
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: "#ffffff",
-    marginRight: 20,
-  },
-  loginButtonText: {
-    fontSize: 15,
-    color: "white",
-    textAlign: "center",
-  },
-});
 
 export default HomeScreen;

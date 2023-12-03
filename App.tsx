@@ -1,12 +1,12 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/home/HomeScreen";
 
-import RegisterScreen from "./components/register/RegisterScreen";
-import RegisterScreen2 from "./components/register/RegisterScreen2";
+import RegisterScreen from "./screens/register/RegisterScreen";
+import RegisterScreen2 from "./screens/register/RegisterScreen2";
 
 import LoginScreen from "./screens/login/LoginScreen";
 
@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <View style={styles.container}>
+      <View className="flex-1 bg-white">
         <Stack.Navigator
           initialRouteName="Home"
           screenOptions={{ headerShown: false }}
@@ -36,11 +36,4 @@ export default function App() {
       </View>
     </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-});
+};
