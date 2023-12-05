@@ -29,7 +29,7 @@ function MenuApp() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#1f2937",
+          backgroundColor: 'neutral-950',
           borderTopWidth: 0,
           shadowOffset: { width: 0, height: 0 },
           shadowColor: "rgba(0,0,0,0.05)",
@@ -83,7 +83,7 @@ export default function App() {
     <NavigationContainer>
       <View className="flex-1 bg-white">
         <Stack.Navigator
-          initialRouteName="Connexion"
+          initialRouteName="Home"
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Home" component={MenuApp} />
