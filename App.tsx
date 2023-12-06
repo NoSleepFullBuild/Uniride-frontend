@@ -11,13 +11,19 @@ import RegisterScreen from "./screens/register/RegisterScreen";
 import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
+import SearchScreen from "./screens/search/SearchScreen";
 
 export type RootStackParamList = {
   Home: undefined;
   Connexion: undefined;
   Register: undefined;
-  RegisterSecond: undefined;
+  RegisterSecond: {
+    lastName: string;
+    firstName: string;
+    phoneNumber: string;
+  };
   Login: undefined;
+  Search: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -91,6 +97,7 @@ export default function App() {
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </View>
