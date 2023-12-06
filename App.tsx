@@ -83,7 +83,7 @@ export default function App() {
     <NavigationContainer>
       <View className="flex-1 bg-white">
         <Stack.Navigator
-          initialRouteName="Home"
+          initialRouteName="Connexion"
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Home" component={MenuApp} />

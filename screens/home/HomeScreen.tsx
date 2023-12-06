@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  TextInput,
-} from "react-native";
+import React from "react";
+import { View, Text, ImageBackground } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import SearchTraject from "../../components/search/SearchTraject";

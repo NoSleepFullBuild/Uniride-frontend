@@ -11,17 +11,19 @@ const SearchTraject = () => {
   const [inputIconsColor, setInputIconsColor] = useState("lightslategrey");
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
 
-  {/* 
-    * On my test, the returned date is 1 hour and 10min less than the selected date
-    * TODO: Verify the pertinence of the return between different localizations 
-    * https://github.com/react-native-datetimepicker/datetimepicker#localization-note
-  */}
+  {
+    /*
+     * On my test, the returned date is 1 hour and 10min less than the selected date
+     * TODO: Verify the pertinence of the return between different localizations
+     * https://github.com/react-native-datetimepicker/datetimepicker#localization-note
+     */
+  }
   const handleSearch = () => {
     console.log({ depart, destination, date });
   };
 
   const onChangeDate = (event: any, selectedDate: any) => {
-    if (event.type !== 'dismissed') {
+    if (event.type !== "dismissed") {
       const currentDate = selectedDate || date;
       setDate(currentDate);
     }
@@ -55,13 +57,13 @@ const SearchTraject = () => {
         {/* Date Input */}
         <View className="px-1.5 pb-2 flex flex-row items-center opacity-80">
           <Icon name={"calendar"} size={18} color={inputIconsColor} />
-            <DateTimePicker
-              value={date}
-              mode="date"
-              display="default"
-              onChange={onChangeDate}
-              themeVariant="dark"
-            />
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChangeDate}
+            themeVariant="dark"
+          />
         </View>
       </View>
       <TouchableOpacity
