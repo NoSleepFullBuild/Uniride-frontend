@@ -33,7 +33,7 @@ const RegisterScreen2 = ({ navigation }: Props) => {
   };
 
   const handleRegister = () => {
-    //navigation.replace("Home");
+    navigation.replace("Home");
   };
 
   return (

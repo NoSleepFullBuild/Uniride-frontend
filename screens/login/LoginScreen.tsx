@@ -14,7 +14,7 @@ type Props = {
 
 const LoginScreen = ({ navigation }: Props) => {
   const handleLogin = () => {
-    //navigation.replace("Home");
+    navigation.replace("Home");
   };
 
   return (
@@ -57,7 +57,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
       <View className="flex-row items-center mt-2.5">
         <Text>Pas encore de compte ?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <TouchableOpacity onPress={() => navigation.replace("Register")}>
           <Text className="ml-1 underline">M'inscrire</Text>
         </TouchableOpacity>
       </View>
