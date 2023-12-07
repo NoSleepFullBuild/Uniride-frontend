@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ImageBackground } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
-import SearchTraject from "../../components/search/SearchTraject";
+import SearchTraject from "../../components/searchTraject/SearchTraject";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
