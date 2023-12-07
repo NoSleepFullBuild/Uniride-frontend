@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const SearchTraject = () => {
+type SearchTrajectNavigationProp = {
+  navigation: any;
+};
+
+const SearchTraject = ({ navigation }: SearchTrajectNavigationProp) => {
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
+
+  const departRef = useRef<TextInput>(null);
+  const destinationRef = useRef<TextInput>(null);
 
   const [inputIconsColor, setInputIconsColor] = useState("lightslategrey");
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
@@ -20,6 +27,7 @@ const SearchTraject = () => {
   }
   const handleSearch = () => {
     console.log({ depart, destination, date });
+    navigation.push("Search");
   };
 
   const onChangeDate = (event: any, selectedDate: any) => {
@@ -41,6 +49,11 @@ const SearchTraject = () => {
             placeholderTextColor={iconsColor}
             value={depart}
             onChangeText={setDepart}
+            textContentType="none"
+            maxLength={50}
+            returnKeyType="next"
+            onSubmitEditing={() => destinationRef.current?.focus()}
+            ref={departRef}
           />
         </View>
         {/* Destination Input */}
@@ -52,6 +65,10 @@ const SearchTraject = () => {
             placeholderTextColor={iconsColor}
             value={destination}
             onChangeText={setDestination}
+            textContentType="none"
+            maxLength={50}
+            returnKeyType="next"
+            ref={destinationRef}
           />
         </View>
         {/* Date Input */}

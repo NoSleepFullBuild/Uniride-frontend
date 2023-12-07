@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }: Props) => {
       </View>
 
       <View className="flex-1 mt-[35%]">
-        <SearchTraject />
+        <SearchTraject navigation={navigation} />
       </View>
     </ImageBackground>
   );
