@@ -8,40 +8,46 @@ type SearchBarNavigationProp = {
 };
 
 const SearchBAr = ({ navigation, onSearch }: SearchBarNavigationProp) => {
-    const [searchQuery, setSearchQuery] = useState('');
-  
-    const handleSearch = () => {
-      if (onSearch) {
-        onSearch(searchQuery);
-      }
-    };
-  
-    return (
-      <View className="flex-row items-center border-2 border-zinc-400 rounded-xl shadow">
-        {/* Go back button */}
-        <TouchableOpacity onPress={() => navigation.goBack()} className="basis-2/10 p-3 rounded-l-lg bg-red-800">
-          <Icon name={"angle-left"} size={26} color="#000000" />
-        </TouchableOpacity>
+  const [searchQuery, setSearchQuery] = useState("");
 
-        {/* Search input */}
-        <TouchableOpacity className="basis-6/10 bg-blue-600">
-          {/* Contain Text : Lyon -> Paris and Subtext : date */}
-          <View className="flex-1 items-center">
-            <Text className="text-black text-base font-semibold">
-              Lyon - Paris
-            </Text>
-            <Text className="text-black text-sm font-normal ml-1">
-              12/12/2021
-            </Text>
-          </View>
-        </TouchableOpacity>
+  const handleSearch = () => {
+    if (onSearch) {
+      onSearch(searchQuery);
+    }
+  };
 
-        {/* Filter button */}
-        <TouchableOpacity className="basis-3/10 rounded-r-lg bg-green-800" onPress={handleSearch}>
-          <Text className="text-white font-semibold">Filtrer</Text>
-        </TouchableOpacity>
-      </View>
-    );
+  return (
+    <View className="flex-row items-center shadow">
+      {/* Go back button */}
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        className="flex-none p-3 border-y-2 border-l-2 border-zinc-400 rounded-l-xl h-14"
+      >
+        <Icon name={"angle-left"} size={26} color="#000000" />
+      </TouchableOpacity>
+
+      {/* Search input */}
+      <TouchableOpacity className="grow border-y-2 border-zinc-400 rounded-y-xl h-14 py-1">
+        {/* Contain Text : Lyon -> Paris and Subtext : date */}
+        <View className="flex-1 items-center">
+          <Text className="text-black text-base font-semibold">
+            Lyon - Paris
+          </Text>
+          <Text className="text-black text-sm font-normal">
+            12/12/2021
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* Filter button */}
+      <TouchableOpacity
+        className="flex-none px-3 justify-center items-center border-y-2 border-r-2 border-zinc-400 rounded-r-xl h-14"
+        onPress={handleSearch}
+      >
+        <Text className="font-bold text-base">Filtrer</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default SearchBAr;
