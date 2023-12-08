@@ -87,7 +87,7 @@ function MenuApp() {
 export default function App() {
   return (
     <NavigationContainer>
-      <View className="flex-1 bg-white">
+      <View className="flex-1 bg-zinc-800">
         <Stack.Navigator
           initialRouteName="Connexion"
           screenOptions={{ headerShown: false }}
