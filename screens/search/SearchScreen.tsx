@@ -13,14 +13,10 @@ type Props = {
 };
 
 const SearchScreen = ({ navigation }: Props) => {
-  const handleSearch = (query: any): any => {
-    console.log(query);
-  };
-
   return (
     <View className="flex-1 bg-cover bg-center bg-zinc-950 justify-center">
-      <View className="flex-1 mt-[15%] px-5">
-        <SearchBar navigation={navigation} onSearch={handleSearch} />
+      <View className="flex-1">
+        <SearchBar navigation={navigation} />
       </View>
     </View>
   );
