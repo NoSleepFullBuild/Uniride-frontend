@@ -18,8 +18,10 @@ const SearchScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View className="flex-1 mt-[15%] px-5">
-      <SearchBar navigation={navigation} onSearch={handleSearch} />
+    <View className="flex-1 bg-cover bg-center bg-zinc-950 justify-center">
+      <View className="flex-1 mt-[15%] px-5">
+        <SearchBar navigation={navigation} onSearch={handleSearch} />
+      </View>
     </View>
   );
 };
