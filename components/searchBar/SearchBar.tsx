@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Modal,
   Animated,
   Dimensions,
   TouchableWithoutFeedback,
@@ -18,6 +17,7 @@ type SearchBarNavigationProp = {
 const screenHeight = Dimensions.get("window").height;
 
 const SearchBAr = ({ navigation }: SearchBarNavigationProp) => {
+  const [bgColor, setBgColor] = useState("#09090b"); // bg-zinc-950
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
   const [textColor, setRightTextColor] = useState("text-neutral-300");
   const [subTextColor, setRightSubTextColor] = useState("text-slate-500");
@@ -92,11 +92,12 @@ const SearchBAr = ({ navigation }: SearchBarNavigationProp) => {
               left: 0,
               right: 0,
               height: screenHeight,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: bgColor,
             }}
           >
             <TouchableWithoutFeedback>
-              <View className="mt-[15%]">
+              <View className="mt-[15%] mx-5">
+                <Text className={"my-5 font-bold text-xl pl-2 pr-3 " + textColor}>Modifiez votre recherche</Text>
                 <SearchTraject navigation={undefined} />
               </View>
             </TouchableWithoutFeedback>

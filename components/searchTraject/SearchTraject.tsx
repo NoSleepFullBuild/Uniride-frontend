@@ -38,7 +38,7 @@ const SearchTraject = ({ navigation }: SearchTrajectNavigationProp) => {
   };
 
   return (
-    <View className="mx-7 bg-zinc-800 rounded-xl">
+    <View className="bg-zinc-800 rounded-xl">
       <View className="px-5 pt-4">
         {/* Departure Input */}
         <View className="px-1.5 pb-2 mb-2 flex flex-row items-center border-b border-slate-500 opacity-80 rounded">
