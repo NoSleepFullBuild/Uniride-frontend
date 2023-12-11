@@ -3,11 +3,12 @@ import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-type SearchTrajectNavigationProp = {
+type SearchTrajectProp = {
   navigation: any;
+  onClose?: () => void;
 };
 
-const SearchTraject = ({ navigation }: SearchTrajectNavigationProp) => {
+const SearchTraject = ({ navigation, onClose }: SearchTrajectProp) => {
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
@@ -18,6 +19,21 @@ const SearchTraject = ({ navigation }: SearchTrajectNavigationProp) => {
   const [inputIconsColor, setInputIconsColor] = useState("lightslategrey");
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
 
+  const handleSearch = () => {
+    const formattedDate = date
+      .toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      })
+      .replace(/\./g, "");
+    const searchParams = { depart, destination, date: formattedDate };
+    navigation.navigate("Search", { searchParams });
+    if (onClose) {
+      onClose();
+    }
+  };
+
   {
     /*
      * On my test, the returned date is 1 hour and 10min less than the selected date
@@ -25,11 +41,6 @@ const SearchTraject = ({ navigation }: SearchTrajectNavigationProp) => {
      * https://github.com/react-native-datetimepicker/datetimepicker#localization-note
      */
   }
-  const handleSearch = () => {
-    console.log({ depart, destination, date });
-    navigation.push("Search");
-  };
-
   const onChangeDate = (event: any, selectedDate: any) => {
     if (event.type !== "dismissed") {
       const currentDate = selectedDate || date;

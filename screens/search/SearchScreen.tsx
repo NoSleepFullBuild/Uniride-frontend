@@ -9,14 +9,17 @@ type SearchScreenNavigationProp = StackNavigationProp<
 >;
 
 type Props = {
+  route: any;
   navigation: SearchScreenNavigationProp;
 };
 
-const SearchScreen = ({ navigation }: Props) => {
+const SearchScreen = ({ route, navigation }: Props) => {
+  const { searchParams } = route.params;
+
   return (
     <View className="flex-1 bg-cover bg-center bg-zinc-950 justify-center">
       <View className="flex-1">
-        <SearchBar navigation={navigation} />
+        <SearchBar searchParams={searchParams} navigation={navigation} />
       </View>
     </View>
   );
