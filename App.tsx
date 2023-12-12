@@ -27,7 +27,7 @@ export type RootStackParamList = {
     searchParams: {
       depart: string;
       destination: string;
-      date: string;
+      date: Date;
     };
   };
 };

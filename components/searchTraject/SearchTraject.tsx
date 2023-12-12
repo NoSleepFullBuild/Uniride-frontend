@@ -23,14 +23,7 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
 
   const handleSearch = () => {
-    const formattedDate = date
-      .toLocaleDateString("fr-FR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-      })
-      .replace(/\./g, "");
-    const searchParams = { depart, destination, date: formattedDate };
+    const searchParams = { depart, destination, date };
     navigation.navigate("Search", { searchParams })
     if (onClose) {
       onClose();

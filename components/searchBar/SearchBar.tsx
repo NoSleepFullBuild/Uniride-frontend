@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -12,10 +12,10 @@ import SearchTraject from "../searchTraject/SearchTraject";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
-type SearchParams = {
+export type SearchParams = {
   depart: string;
   destination: string;
-  date: string;
+  date: Date;
 };
 
 type SearchBarProps = {
@@ -59,18 +59,19 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
         </TouchableOpacity>
 
         {/* Search input */}
-        <TouchableOpacity
-          className="flex-none grow px-2"
-          onPress={toggleModal}
-        >
+        <TouchableOpacity className="flex-none grow px-2" onPress={toggleModal}>
           <View className="flex-1 justify-center gap-y-0.5 items-start">
             <Text className={"text-sm font-semibold " + textColor}>
               {depart} - {destination}
             </Text>
-            <Text
-              className={"text-sm font-normal font-semibold " + subTextColor}
-            >
-              {date}
+            <Text className={"text-sm font-semibold " + subTextColor}>
+              {date
+                .toLocaleDateString("fr-FR", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                })
+                .replace(/\./g, "")}
             </Text>
           </View>
         </TouchableOpacity>
