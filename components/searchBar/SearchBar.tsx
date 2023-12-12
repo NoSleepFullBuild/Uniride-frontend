@@ -30,7 +30,7 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
 
   const [bgColor, setBgColor] = useState("#09090b"); // bg-zinc-950
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
-  const [textColor, setRightTextColor] = useState("text-neutral-300");
+  const [textColor, setRightTextColor] = useState("text-white");
   const [subTextColor, setRightSubTextColor] = useState("text-slate-500");
   const [modalVisible, setModalVisible] = useState(false);
   const modalY = useRef(new Animated.Value(-screenHeight)).current;

@@ -4,6 +4,7 @@ import { RootStackParamList } from "../../App";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { RouteProp } from "@react-navigation/native";
 import SearchCard from "../../components/searchCard/searchCard";
+import { useState } from "react";
 
 type SearchScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -19,11 +20,15 @@ type SearchScreenProps = {
 
 const SearchScreen = ({ route, navigation }: SearchScreenProps) => {
   const { searchParams } = route.params;
+
+  const [bgColor, setBgColor] = useState("bg-zinc-950");
+  const [textColor, setRightTextColor] = useState("text-white");
+
   return (
-    <View className="flex-1 bg-cover bg-center bg-zinc-950 justify-center">
+    <View className={"flex-1 bg-cover bg-center justify-center " + bgColor}>
       <View className="flex-1">
         <SearchBar searchParams={searchParams} navigation={navigation} />
-        <Text className="text-white mt-8 mx-5 text-lg font-bold">
+        <Text className={"mt-6 mb-3 mx-5 text-xl font-bold " + textColor}>
           {searchParams.date
             .toLocaleDateString("fr-FR", {
               day: "numeric",
@@ -32,7 +37,12 @@ const SearchScreen = ({ route, navigation }: SearchScreenProps) => {
             })
             .replace(/\./g, "")}
         </Text>
-        <SearchCard />
+        <View>
+          <SearchCard />
+          <SearchCard />
+          <SearchCard />
+          <SearchCard />
+        </View>
       </View>
     </View>
   );

@@ -19,6 +19,8 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
   const departRef = useRef<TextInput>(null);
   const destinationRef = useRef<TextInput>(null);
 
+  const [bgColor, setBgColor] = useState("bg-zinc-800");
+  const [textColor, setRightTextColor] = useState("text-white");
   const [inputIconsColor, setInputIconsColor] = useState("lightslategrey");
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
 
@@ -45,13 +47,13 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
   };
 
   return (
-    <View className="bg-zinc-800 rounded-xl">
+    <View className={"rounded-xl " + bgColor}>
       <View className="px-5 pt-4">
         {/* Departure Input */}
         <View className="px-1.5 pb-2 mb-2 flex flex-row items-center border-b border-slate-500 opacity-80 rounded">
           <Icon name={"circle-o"} size={18} color={inputIconsColor} />
           <TextInput
-            className="px-2.5 pt-1 pb-2 text-white font-semibold text-base min-w-full"
+            className={"px-2.5 pt-1 pb-2 font-semibold text-base min-w-full " + textColor}
             placeholder="Départ"
             placeholderTextColor={iconsColor}
             value={depart}
@@ -67,7 +69,7 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
         <View className="px-1.5 pb-2 mb-2 flex flex-row items-center border-b border-slate-500 opacity-80 rounded">
           <Icon name={"circle-o"} size={18} color={inputIconsColor} />
           <TextInput
-            className="px-2.5 pt-1 pb-2 text-white font-semibold text-base min-w-full"
+            className={"px-2.5 pt-1 pb-2 font-semibold text-base min-w-full " + textColor}
             placeholder="Destination"
             placeholderTextColor={iconsColor}
             value={destination}
@@ -94,7 +96,7 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
         className="bg-cyan-600 py-4 mt-1 rounded-b-xl opacity-80"
         onPress={handleSearch}
       >
-        <Text className="text-center text-white font-bold text-base">
+        <Text className={"text-center font-bold text-base " + textColor }>
           Rechercher
         </Text>
       </TouchableOpacity>
