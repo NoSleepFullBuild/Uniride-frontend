@@ -2,13 +2,16 @@ import React, { useRef, useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { RootStackParamList } from "../../App";
+import { NavigationProp } from "@react-navigation/native";
 
-type SearchTrajectProp = {
-  navigation: any;
+type SearchTrajectProps = {
+  navigation: NavigationProp<RootStackParamList>;
   onClose?: () => void;
 };
 
-const SearchTraject = ({ navigation, onClose }: SearchTrajectProp) => {
+
+const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState(new Date());
@@ -28,7 +31,7 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProp) => {
       })
       .replace(/\./g, "");
     const searchParams = { depart, destination, date: formattedDate };
-    navigation.navigate("Search", { searchParams });
+    navigation.navigate("Search", { searchParams })
     if (onClose) {
       onClose();
     }

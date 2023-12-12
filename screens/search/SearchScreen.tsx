@@ -2,18 +2,21 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { View } from "react-native";
 import { RootStackParamList } from "../../App";
 import SearchBar from "../../components/searchBar/SearchBar";
+import { RouteProp } from "@react-navigation/native";
 
 type SearchScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Search"
 >;
 
-type Props = {
-  route: any;
+type SearchScreenRouteProp = RouteProp<RootStackParamList, "Search">;
+
+type SearchScreenProps = {
+  route: SearchScreenRouteProp;
   navigation: SearchScreenNavigationProp;
 };
 
-const SearchScreen = ({ route, navigation }: Props) => {
+const SearchScreen = ({ route, navigation }: SearchScreenProps) => {
   const { searchParams } = route.params;
 
   return (

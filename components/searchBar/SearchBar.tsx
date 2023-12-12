@@ -9,15 +9,23 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SearchTraject from "../searchTraject/SearchTraject";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../App";
 
-type SearchBarNavigationProp = {
-  searchParams: any;
-  navigation: any;
+type SearchParams = {
+  depart: string;
+  destination: string;
+  date: string;
+};
+
+type SearchBarProps = {
+  searchParams: SearchParams;
+  navigation: StackNavigationProp<RootStackParamList>;
 };
 
 const screenHeight = Dimensions.get("window").height;
 
-const SearchBAr = ({ searchParams, navigation }: SearchBarNavigationProp) => {
+const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
   const { depart, destination, date } = searchParams;
 
   const [bgColor, setBgColor] = useState("#09090b"); // bg-zinc-950
@@ -27,26 +35,17 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarNavigationProp) => {
   const [modalVisible, setModalVisible] = useState(false);
   const modalY = useRef(new Animated.Value(-screenHeight)).current;
 
-  const showModal = () => {
-    setModalVisible(true);
-    Animated.spring(modalY, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const hideModal = () => {
-    Animated.spring(modalY, {
-      toValue: -screenHeight,
-      useNativeDriver: true,
-    }).start(() => setModalVisible(false));
-  };
-
-  useEffect(() => {
+  const toggleModal = () => {
     if (modalVisible) {
-      showModal();
+      Animated.spring(modalY, {
+        toValue: -screenHeight,
+        useNativeDriver: true,
+      }).start(() => setModalVisible(false));
+    } else {
+      setModalVisible(true);
+      Animated.spring(modalY, { toValue: 0, useNativeDriver: true }).start();
     }
-  }, [modalVisible]);
+  };
 
   return (
     <View>
@@ -62,7 +61,7 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarNavigationProp) => {
         {/* Search input */}
         <TouchableOpacity
           className="flex-none grow px-2"
-          onPress={() => setModalVisible(true)}
+          onPress={toggleModal}
         >
           <View className="flex-1 justify-center gap-y-0.5 items-start">
             <Text className={"text-sm font-semibold " + textColor}>
@@ -86,7 +85,7 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarNavigationProp) => {
 
       {/* Modal for SearchTraject */}
       {modalVisible && (
-        <TouchableWithoutFeedback onPress={hideModal}>
+        <TouchableWithoutFeedback onPress={toggleModal}>
           <Animated.View
             style={{
               transform: [{ translateY: modalY }],
@@ -100,8 +99,12 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarNavigationProp) => {
           >
             <TouchableWithoutFeedback>
               <View className="mt-[15%] mx-5">
-                <Text className={"my-5 font-bold text-xl pl-2 pr-3 " + textColor}>Modifiez votre recherche</Text>
-                <SearchTraject navigation={navigation} onClose={hideModal} />
+                <Text
+                  className={"my-5 font-bold text-xl pl-2 pr-3 " + textColor}
+                >
+                  Modifiez votre recherche
+                </Text>
+                <SearchTraject navigation={navigation} onClose={toggleModal} />
               </View>
             </TouchableWithoutFeedback>
           </Animated.View>

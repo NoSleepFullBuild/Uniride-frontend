@@ -23,7 +23,13 @@ export type RootStackParamList = {
     phoneNumber: string;
   };
   Login: undefined;
-  Search: undefined;
+  Search: {
+    searchParams: {
+      depart: string;
+      destination: string;
+      date: string;
+    };
+  };
 };
 
 const Tab = createBottomTabNavigator();
