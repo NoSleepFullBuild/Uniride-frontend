@@ -21,12 +21,13 @@ const RegisterScreen = ({ navigation }: Props) => {
   const firstNameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);
 
-  // TODO: Validate phone number
-  const validatePhoneNumber = (number: any) => {
+  const validatePhoneNumber = (number: string) => {
+    number = number.replace(/\s/g, "");
     setPhoneNumber(number);
   };
 
   const handleRegister = () => {
+    console.log(lastName, firstName, phoneNumber);
     navigation.push("RegisterSecond", {
       lastName,
       firstName,
@@ -92,7 +93,7 @@ const RegisterScreen = ({ navigation }: Props) => {
             inputMode="tel"
             textContentType="telephoneNumber"
             keyboardType="phone-pad"
-            maxLength={10}
+            maxLength={13}
             returnKeyType="next"
             onSubmitEditing={handleRegister}
             ref={phoneRef}
