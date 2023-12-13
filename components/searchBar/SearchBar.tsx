@@ -49,6 +49,7 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
 
   return (
     <View>
+      {/* SearchBar */}
       <View className="mt-[15%] mx-5 flex-row justify-center shadow border-2 border-2 border-zinc-800 rounded-2xl h-16">
         {/* Go back button */}
         <TouchableOpacity
@@ -90,16 +91,11 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
           <Animated.View
             style={{
               transform: [{ translateY: modalY }],
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
               height: screenHeight,
-              backgroundColor: bgColor,
             }}
           >
             <TouchableWithoutFeedback>
-              <View className="mt-[15%] mx-5">
+              <View className="mx-5">
                 <Text
                   className={"my-5 font-bold text-xl pl-2 pr-3 " + textColor}
                 >
