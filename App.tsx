@@ -11,13 +11,25 @@ import RegisterScreen from "./screens/register/RegisterScreen";
 import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
+import SearchScreen from "./screens/search/SearchScreen";
 
 export type RootStackParamList = {
   Home: undefined;
   Connexion: undefined;
   Register: undefined;
-  RegisterSecond: undefined;
+  RegisterSecond: {
+    lastName: string;
+    firstName: string;
+    phoneNumber: string;
+  };
   Login: undefined;
+  Search: {
+    searchParams: {
+      depart: string;
+      destination: string;
+      date: Date;
+    };
+  };
 };
 
 const Tab = createBottomTabNavigator();
@@ -81,7 +93,7 @@ function MenuApp() {
 export default function App() {
   return (
     <NavigationContainer>
-      <View className="flex-1 bg-white">
+      <View className="flex-1 bg-zinc-800">
         <Stack.Navigator
           initialRouteName="Connexion"
           screenOptions={{ headerShown: false }}
@@ -91,6 +103,7 @@ export default function App() {
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </View>

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ImageBackground } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
-import SearchTraject from "../../components/search/SearchTraject";
+import SearchTraject from "../../components/searchTraject/SearchTraject";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -27,8 +27,8 @@ const HomeScreen = ({ navigation }: Props) => {
         </Text>
       </View>
 
-      <View className="flex-1 mt-[35%]">
-        <SearchTraject />
+      <View className="mx-7 flex-1 mt-[35%]">
+        <SearchTraject navigation={navigation} />
       </View>
     </ImageBackground>
   );

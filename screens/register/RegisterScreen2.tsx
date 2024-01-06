@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
@@ -6,23 +6,34 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
-// Définissez les props en fonction du type de navigation de votre pile
 type RegisterSecondScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "RegisterSecond"
 >;
 
-// Types pour les props du composant
 type Props = {
+  route: {
+    params: {
+      lastName: string;
+      firstName: string;
+      phoneNumber: string;
+    };
+  }
   navigation: RegisterSecondScreenNavigationProp;
 };
 
-const RegisterScreen2 = ({ navigation }: Props) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+const RegisterScreen2 = ({ route, navigation }: Props) => {
+  const { lastName, firstName, phoneNumber } = route.params;
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState("eye");
   const [rightIconColor, setRightIconColor] = useState("#000000");
@@ -33,6 +44,7 @@ const RegisterScreen2 = ({ navigation }: Props) => {
   };
 
   const handleRegister = () => {
+    console.log({ lastName, firstName, phoneNumber, email, password });
     navigation.replace("Home");
   };
 
@@ -50,8 +62,15 @@ const RegisterScreen2 = ({ navigation }: Props) => {
         <TextInput
           className="flex-1 rounded text-base text-gray-800 h-10"
           placeholder="Votre email"
+          onChangeText={setEmail}
           autoCorrect={false}
           autoFocus={true}
+          inputMode="email"
+          textContentType="emailAddress"
+          maxLength={50}
+          returnKeyType="next"
+          onSubmitEditing={() => passwordRef.current?.focus()}
+          ref={emailRef}
         />
       </View>
 
@@ -59,9 +78,14 @@ const RegisterScreen2 = ({ navigation }: Props) => {
         <TextInput
           className="flex-1 rounded text-base text-gray-800 h-10"
           placeholder="Votre mot de passe"
+          onChangeText={setPassword}
           autoCorrect={false}
           secureTextEntry={passwordVisibility}
           textContentType="password"
+          maxLength={100}
+          returnKeyType="send"
+          onSubmitEditing={handleRegister}
+          ref={passwordRef}
         />
         <TouchableOpacity className="p-2.5" onPress={handlePasswordVisibility}>
           <Icon name={rightIcon} size={20} color={rightIconColor} />

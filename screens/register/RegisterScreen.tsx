@@ -1,33 +1,38 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 
-// Définissez les props en fonction du type de navigation de votre pile
 type RegisterScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Register"
 >;
 
-// Types pour les props du composant
 type Props = {
   navigation: RegisterScreenNavigationProp;
 };
 
 const RegisterScreen = ({ navigation }: Props) => {
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const validatePhoneNumber = (number: any) => {
+  const lastNameRef = useRef<TextInput>(null);
+  const firstNameRef = useRef<TextInput>(null);
+  const phoneRef = useRef<TextInput>(null);
+
+  const validatePhoneNumber = (number: string) => {
+    number = number.replace(/\s/g, "");
     setPhoneNumber(number);
   };
 
   const handleRegister = () => {
-    navigation.push("RegisterSecond");
+    console.log(lastName, firstName, phoneNumber);
+    navigation.push("RegisterSecond", {
+      lastName,
+      firstName,
+      phoneNumber,
+    });
   };
 
   return (
@@ -50,8 +55,14 @@ const RegisterScreen = ({ navigation }: Props) => {
           <TextInput
             className="h-10 rounded text-base text-gray-800"
             placeholder="Votre nom"
+            onChangeText={setLastName}
             autoCorrect={false}
-            autoFocus
+            autoFocus={true}
+            textContentType="familyName"
+            maxLength={20}
+            returnKeyType="next"
+            onSubmitEditing={() => firstNameRef.current?.focus()}
+            ref={lastNameRef}
           />
         </View>
       </View>
@@ -61,8 +72,13 @@ const RegisterScreen = ({ navigation }: Props) => {
           <TextInput
             className="h-10 rounded text-base text-gray-800"
             placeholder="Votre prénom"
+            onChangeText={setFirstName}
             autoCorrect={false}
-            autoFocus
+            textContentType="givenName"
+            maxLength={20}
+            returnKeyType="next"
+            onSubmitEditing={() => phoneRef.current?.focus()}
+            ref={firstNameRef}
           />
         </View>
       </View>
@@ -72,8 +88,15 @@ const RegisterScreen = ({ navigation }: Props) => {
           <TextInput
             className="h-10 rounded text-base text-gray-800"
             placeholder="Votre numéro de téléphone"
+            onChangeText={validatePhoneNumber}
             autoCorrect={false}
-            autoFocus
+            inputMode="tel"
+            textContentType="telephoneNumber"
+            keyboardType="phone-pad"
+            maxLength={13}
+            returnKeyType="next"
+            onSubmitEditing={handleRegister}
+            ref={phoneRef}
           />
         </View>
       </View>

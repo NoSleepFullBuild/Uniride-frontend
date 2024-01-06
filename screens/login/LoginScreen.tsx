@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -13,7 +14,23 @@ type Props = {
 };
 
 const LoginScreen = ({ navigation }: Props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const emailRef = useRef<TextInput>(null);
+  const passwordRef = useRef<TextInput>(null);
+
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [rightIcon, setRightIcon] = useState("eye");
+  const [rightIconColor, setRightIconColor] = useState("#000000");
+
+  const handlePasswordVisibility = () => {
+    setPasswordVisibility(!passwordVisibility);
+    setRightIcon(rightIcon === "eye" ? "eye-slash" : "eye");
+  };
+
   const handleLogin = () => {
+    console.log({ email, password });
     navigation.replace("Home");
   };
 
@@ -36,13 +53,35 @@ const LoginScreen = ({ navigation }: Props) => {
         autoFocus
         className="w-4/5 p-2.5 border border-gray-400 rounded mb-2.5"
         placeholder="Votre email"
+        onChangeText={setEmail}
+        autoCorrect={false}
+        textContentType="emailAddress"
+        maxLength={100}
+        returnKeyType="next"
+        onSubmitEditing={() => passwordRef.current?.focus()}
+        ref={emailRef}
       />
 
-      <TextInput
-        className="w-4/5 p-2.5 border border-gray-400 rounded mb-2.5"
-        placeholder="Votre mot de passe"
-        secureTextEntry
-      />
+      <View className="w-4/5 flex-row border border-gray-400 rounded mb-2.5">
+        <TextInput
+          className="flex-1 p-2.5"
+          placeholder="Votre mot de passe"
+          onChangeText={setPassword}
+          autoCorrect={false}
+          secureTextEntry={passwordVisibility}
+          textContentType="password"
+          maxLength={100}
+          returnKeyType="send"
+          onSubmitEditing={handleLogin}
+          ref={passwordRef}
+        />
+        <TouchableOpacity
+          className="p-2.5 mr-2"
+          onPress={handlePasswordVisibility}
+        >
+          <Icon name={rightIcon} size={20} color={rightIconColor} />
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity>
         <Text className="mt-1.5 mb-2.5 underline">Mot de passe oublié ?</Text>
