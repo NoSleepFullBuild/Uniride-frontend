@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import InputBar from "../../components/inputBar/InputBar";
-import { useAppContext } from "../../context/AppContext";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -14,10 +13,8 @@ type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
-const PublishScreen = ({ navigation }: Props) => {
-  const { departure, setDeparture } = useAppContext();
+const PublishScreen2 = ({ navigation }: Props) => {
   const handleContinue = () => {
-    console.log(departure);
     navigation.navigate("Publish2");
   };
 
@@ -25,7 +22,7 @@ const PublishScreen = ({ navigation }: Props) => {
     <View className="flex-1 bg-zinc-950">
       <View className="flex mt-[10%] mb-4 mx-5">
         <Text className="text-white text-3xl font-bold mt-6">
-          D'où partez-vous ?
+          Où allez-vous ?
         </Text>
       </View>
       <InputBar navigation={navigation} />
@@ -40,4 +37,4 @@ const PublishScreen = ({ navigation }: Props) => {
   );
 };
 
-export default PublishScreen;
+export default PublishScreen2;

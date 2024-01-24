@@ -5,19 +5,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import { AppContext } from "../../context/AppContext";
 
-interface InputParams {
-  placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
-};
-
 type InputBarProps = {
   navigation: StackNavigationProp<RootStackParamList>;
-  inputParams: InputParams;
 };
 
-const InputBar = ({ navigation, inputParams }: InputBarProps) => {
-  const { placeholder, value, onChangeText } = inputParams;
+const InputBar = ({ navigation }: InputBarProps) => {
   const { departure, setDeparture } = useContext(AppContext);
 
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");

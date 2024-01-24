@@ -13,6 +13,7 @@ import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import SearchScreen from "./screens/search/SearchScreen";
 import PublishScreen from "./screens/publish/PublishScreen";
+import PublishScreen2 from "./screens/publish/PublishScreen2";
 import { AppProvider } from "./context/AppContext";
 
 export type RootStackParamList = {
@@ -33,6 +34,7 @@ export type RootStackParamList = {
     };
   };
   Publish: undefined;
+  Publish2: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -109,6 +111,7 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
             <Stack.Screen name="Publish" component={PublishScreen} />
+            <Stack.Screen name="Publish2" component={PublishScreen2} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </View>

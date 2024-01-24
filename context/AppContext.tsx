@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface AppContextInterface {
   departure: string;
@@ -20,7 +20,7 @@ export const AppContext = createContext<AppContextInterface>({
   setPassengers: () => {},
 });
 
-export const AppProvider = ({ children }) => {
+export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [departure, setDeparture] = useState("");
   const [arrival, setArrival] = useState("");
   const [passengers, setPassengers] = useState(0);
@@ -40,3 +40,5 @@ export const AppProvider = ({ children }) => {
     </AppContext.Provider>
   );
 };
+
+export const useAppContext = () => useContext(AppContext);
