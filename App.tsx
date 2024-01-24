@@ -12,6 +12,8 @@ import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import SearchScreen from "./screens/search/SearchScreen";
+import PublishScreen from "./screens/publish/PublishScreen";
+import { AppProvider } from "./context/AppContext";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -30,6 +32,7 @@ export type RootStackParamList = {
       date: Date;
     };
   };
+  Publish: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -41,7 +44,7 @@ function MenuApp() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'neutral-950',
+          backgroundColor: "neutral-950",
           borderTopWidth: 0,
           shadowOffset: { width: 0, height: 0 },
           shadowColor: "rgba(0,0,0,0.05)",
@@ -61,7 +64,7 @@ function MenuApp() {
       />
       <Tab.Screen
         name="Publier"
-        component={HomeScreen}
+        component={PublishScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Icon name="plus-square-o" color={color} size={size} />
@@ -92,21 +95,24 @@ function MenuApp() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <View className="flex-1 bg-zinc-800">
-        <Stack.Navigator
-          initialRouteName="Connexion"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Home" component={MenuApp} />
-          <Stack.Screen name="Connexion" component={ConnexionScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Search" component={SearchScreen} />
-        </Stack.Navigator>
-        <StatusBar style="auto" />
-      </View>
-    </NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
+        <View className="flex-1 bg-zinc-800">
+          <Stack.Navigator
+            initialRouteName="Connexion"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Home" component={MenuApp} />
+            <Stack.Screen name="Connexion" component={ConnexionScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="Publish" component={PublishScreen} />
+          </Stack.Navigator>
+          <StatusBar style="auto" />
+        </View>
+      </NavigationContainer>
+    </AppProvider>
   );
 }

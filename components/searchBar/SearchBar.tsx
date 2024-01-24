@@ -25,10 +25,9 @@ type SearchBarProps = {
 
 const screenHeight = Dimensions.get("window").height;
 
-const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
+const SearchBar = ({ searchParams, navigation }: SearchBarProps) => {
   const { depart, destination, date } = searchParams;
 
-  const [bgColor, setBgColor] = useState("#09090b"); // bg-zinc-950
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
   const [textColor, setRightTextColor] = useState("text-white");
   const [subTextColor, setRightSubTextColor] = useState("text-slate-500");
@@ -111,4 +110,4 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
   );
 };
 
-export default SearchBAr;
+export default SearchBar;
