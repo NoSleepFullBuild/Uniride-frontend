@@ -12,9 +12,9 @@ import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import SearchScreen from "./screens/search/SearchScreen";
-import PublishScreen from "./screens/publish/PublishScreen";
-import PublishScreen2 from "./screens/publish/PublishScreen2";
 import { AppProvider } from "./context/AppContext";
+import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
+import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -33,8 +33,19 @@ export type RootStackParamList = {
       date: Date;
     };
   };
-  Publish: undefined;
-  Publish2: undefined;
+  DeparturePublish: undefined;
+  ArrivalPublish: {
+    depart: string;
+  };
+  PassengerPublish: {
+    depart: string;
+    destination: string;
+  };
+  DatePublish: {
+    depart: string;
+    destination: string;
+    passengers: number;
+  };
 };
 
 const Tab = createBottomTabNavigator();
@@ -66,7 +77,7 @@ function MenuApp() {
       />
       <Tab.Screen
         name="Publier"
-        component={PublishScreen}
+        component={DeparturePublishScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Icon name="plus-square-o" color={color} size={size} />
@@ -110,8 +121,8 @@ export default function App() {
             <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen name="Publish" component={PublishScreen} />
-            <Stack.Screen name="Publish2" component={PublishScreen2} />
+            <Stack.Screen name="Departure" component={DeparturePublishScreen} />
+            <Stack.Screen name="Arrival" component={ArrivalPublishScreen} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </View>

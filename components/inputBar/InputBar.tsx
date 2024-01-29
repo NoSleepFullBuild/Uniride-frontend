@@ -3,14 +3,17 @@ import { TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
-import { AppContext } from "../../context/AppContext";
 
 type InputBarProps = {
-  navigation: StackNavigationProp<RootStackParamList>;
+  onChangeText: (text: string) => void;
+  value: string;
+  placeholder?: string;
 };
 
-const InputBar = ({ navigation }: InputBarProps) => {
-  const { departure, setDeparture } = useContext(AppContext);
+const InputBar = ({ onChangeText, value, placeholder }: InputBarProps) => {
+  const [onChangedText, setOnChangedText] = useState("");
+  const [onSubmitEdit, setOnSubmitEdit] = useState("");
+  const [onRef, setOnRef] = useState("");
 
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
   const [textColor, setRightTextColor] = useState("text-white");
@@ -29,9 +32,9 @@ const InputBar = ({ navigation }: InputBarProps) => {
           <View className="flex-1 justify-center gap-y-0.5 items-start">
             <TextInput
               className={"flex-1 w-full text-sm font-semibold" + textColor}
-              placeholder="Saisissez l'adresse précise"
-              value={departure}
-              onChangeText={setDeparture}
+              placeholder={placeholder}
+              value={value}
+              onChangeText={onChangeText}
             />
           </View>
         </View>

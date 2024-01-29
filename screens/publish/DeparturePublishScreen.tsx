@@ -1,31 +1,39 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import InputBar from "../../components/inputBar/InputBar";
 
-type HomeScreenNavigationProp = StackNavigationProp<
+type DeparturePublishScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Publish"
+  "DeparturePublish"
 >;
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: DeparturePublishScreenNavigationProp;
 };
 
-const PublishScreen2 = ({ navigation }: Props) => {
+const DeparturePublishScreen = ({ navigation }: Props) => {
+  const [selectedDeparture, setSelectedDeparture] = useState("");
+
+  const selectedDepartureRef = useRef<TextInput>(null);
+
   const handleContinue = () => {
-    navigation.navigate("Publish2");
+    console.log(selectedDeparture);
+    navigation.navigate("ArrivalPublish", { depart: selectedDeparture });
   };
+
+  
 
   return (
     <View className="flex-1 bg-zinc-950">
       <View className="flex mt-[10%] mb-4 mx-5">
         <Text className="text-white text-3xl font-bold mt-6">
-          Où allez-vous ?
+          D'où partez-vous ?
         </Text>
       </View>
-      <InputBar navigation={navigation} />
+
+      <InputBar  />
 
       <TouchableOpacity
         className="bg-cyan-600 py-4 mt-1 rounded-xl opacity-80 mx-5"
@@ -37,4 +45,4 @@ const PublishScreen2 = ({ navigation }: Props) => {
   );
 };
 
-export default PublishScreen2;
+export default DeparturePublishScreen;
