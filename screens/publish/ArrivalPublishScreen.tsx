@@ -19,16 +19,15 @@ type Props = {
 };
 
 const ArrivalPublishScreen = ({ route, navigation }: Props) => {
-  console.log('route', route);
   const { depart } = route.params;
-  console.log('depart', depart);
+  console.log(depart);
   const [selectedDestination, setSelectedDestination] = useState("");
 
   const handleContinue = () => {
-    // navigation.navigate("PassengerPublish", {
-    //   depart: depart,
-    //   destination: selectedDestination,
-    // });
+    navigation.navigate("PassengerPublish", {
+      depart: depart,
+      destination: selectedDestination,
+    });
   };
 
   return (
