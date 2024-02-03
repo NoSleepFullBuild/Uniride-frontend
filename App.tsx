@@ -121,8 +121,8 @@ export default function App() {
             <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen name="Departure" component={DeparturePublishScreen} />
-            <Stack.Screen name="Arrival" component={ArrivalPublishScreen} />
+            <Stack.Screen name="DeparturePublish" component={DeparturePublishScreen} />
+            <Stack.Screen name="ArrivalPublish" component={ArrivalPublishScreen} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </View>

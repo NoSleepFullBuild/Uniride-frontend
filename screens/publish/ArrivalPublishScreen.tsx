@@ -4,35 +4,32 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
 import InputBar from "../../components/inputBar/InputBar";
 
-type ArrivalScreenNavigationProp = StackNavigationProp<
+type ArrivalPublishScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "ArrivalPublish"
 >;
 
 type Props = {
   route: {
-    publishParams: {
+    params: {
       depart: string;
     };
   };
-  navigation: ArrivalScreenNavigationProp;
+  navigation: ArrivalPublishScreenNavigationProp;
 };
 
 const ArrivalPublishScreen = ({ route, navigation }: Props) => {
-  const { depart } = route.publishParams;
+  console.log('route', route);
+  const { depart } = route.params;
+  console.log('depart', depart);
   const [selectedDestination, setSelectedDestination] = useState("");
 
   const handleContinue = () => {
-    console.log(selectedDestination);
-    navigation.navigate("PassengerPublish", {
-      depart: depart,
-      destination: selectedDestination,
-    });
+    // navigation.navigate("PassengerPublish", {
+    //   depart: depart,
+    //   destination: selectedDestination,
+    // });
   };
-
-  // const handleInputChange = (value: string) => {
-  //   setSelectedDestination(value);
-  // };
 
   return (
     <View className="flex-1 bg-zinc-950">
@@ -41,6 +38,7 @@ const ArrivalPublishScreen = ({ route, navigation }: Props) => {
           Où allez-vous ?
         </Text>
       </View>
+      
       <InputBar
         onChangeText={(text) => setSelectedDestination(text)}
         value={selectedDestination}

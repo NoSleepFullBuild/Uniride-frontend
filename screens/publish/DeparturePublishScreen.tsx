@@ -16,14 +16,9 @@ type Props = {
 const DeparturePublishScreen = ({ navigation }: Props) => {
   const [selectedDeparture, setSelectedDeparture] = useState("");
 
-  const selectedDepartureRef = useRef<TextInput>(null);
-
   const handleContinue = () => {
-    console.log(selectedDeparture);
     navigation.navigate("ArrivalPublish", { depart: selectedDeparture });
   };
-
-  
 
   return (
     <View className="flex-1 bg-zinc-950">
@@ -33,7 +28,11 @@ const DeparturePublishScreen = ({ navigation }: Props) => {
         </Text>
       </View>
 
-      <InputBar  />
+      <InputBar
+        onChangeText={(text) => setSelectedDeparture(text)}
+        value={selectedDeparture}
+        placeholder="Votre lieu de départ"
+      />
 
       <TouchableOpacity
         className="bg-cyan-600 py-4 mt-1 rounded-xl opacity-80 mx-5"

@@ -1,8 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
 
 type InputBarProps = {
   onChangeText: (text: string) => void;
@@ -11,10 +9,6 @@ type InputBarProps = {
 };
 
 const InputBar = ({ onChangeText, value, placeholder }: InputBarProps) => {
-  const [onChangedText, setOnChangedText] = useState("");
-  const [onSubmitEdit, setOnSubmitEdit] = useState("");
-  const [onRef, setOnRef] = useState("");
-
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
   const [textColor, setRightTextColor] = useState("text-white");
 
