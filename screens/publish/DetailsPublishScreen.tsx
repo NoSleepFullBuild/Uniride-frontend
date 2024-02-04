@@ -51,7 +51,7 @@ const DetailsPublishScreen = ({ route, navigation }: Props) => {
         </Text>
       </View>
 
-      <View className="flex-1 mt-5 mx-5">
+      <View className="flex mt-5 mx-5">
         {/* Date */}
         <View
           className="justify-center shadow border-2 border-2 border-zinc-800 rounded-2xl h-16 mb-14"
@@ -95,16 +95,12 @@ const DetailsPublishScreen = ({ route, navigation }: Props) => {
       </View>
 
       {/* Next page */}
-      <View className="flex-none grow px-2">
-        <View className="flex-1 justify-center gap-y-0.5 items-start">
-          <TouchableOpacity
-            className="bg-cyan-600 py-4 mt-1 rounded-xl opacity-80 mx-5"
-            onPress={handleContinue}
-          >
-            <Text className={"text-center font-bold text-base "}>Suivant</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <TouchableOpacity
+        className="bg-cyan-600 py-4 mt-[100%] rounded-xl opacity-80 mx-5"
+        onPress={handleContinue}
+      >
+        <Text className={"text-center font-bold text-base "}>Suivant</Text>
+      </TouchableOpacity>
     </View>
   );
 };

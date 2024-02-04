@@ -45,7 +45,7 @@ const ArrivalPublishScreen = ({ route, navigation }: Props) => {
       />
 
       <TouchableOpacity
-        className="bg-cyan-600 py-4 mt-1 rounded-xl opacity-80 mx-5"
+        className="bg-cyan-600 py-4 mt-3 rounded-xl opacity-80 mx-5"
         onPress={handleContinue}
       >
         <Text className={"text-center font-bold text-base "}>Suivant</Text>
