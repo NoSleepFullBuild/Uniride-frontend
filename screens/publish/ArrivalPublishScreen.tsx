@@ -21,12 +21,12 @@ type Props = {
 const ArrivalPublishScreen = ({ route, navigation }: Props) => {
   const { depart } = route.params;
   console.log(depart);
-  const [selectedDestination, setSelectedDestination] = useState("");
+  const [selectedArrival, setSelectedArrival] = useState("");
 
   const handleContinue = () => {
-    navigation.navigate("PassengerPublish", {
+    navigation.navigate("DetailsPublish", {
       depart: depart,
-      destination: selectedDestination,
+      arrival: selectedArrival,
     });
   };
 
@@ -39,8 +39,8 @@ const ArrivalPublishScreen = ({ route, navigation }: Props) => {
       </View>
       
       <InputBar
-        onChangeText={(text) => setSelectedDestination(text)}
-        value={selectedDestination}
+        onChangeText={(text) => setSelectedArrival(text)}
+        value={selectedArrival}
         placeholder="Votre destination"
       />
 
