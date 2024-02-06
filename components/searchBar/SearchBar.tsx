@@ -10,13 +10,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import SearchTraject from "../searchTraject/SearchTraject";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
-
-export type SearchParams = {
-  depart: string;
-  destination: string;
-  date: Date;
-};
+import { RootStackParamList, SearchParams } from "../../types/type";
 
 type SearchBarProps = {
   searchParams: SearchParams;

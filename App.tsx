@@ -16,33 +16,7 @@ import { AppProvider } from "./context/AppContext";
 import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
-
-export type RootStackParamList = {
-  Home: undefined;
-  Connexion: undefined;
-  Register: undefined;
-  RegisterSecond: {
-    lastName: string;
-    firstName: string;
-    phoneNumber: string;
-  };
-  Login: undefined;
-  Search: {
-    searchParams: {
-      depart: string;
-      destination: string;
-      date: Date;
-    };
-  };
-  DeparturePublish: undefined;
-  ArrivalPublish: {
-    depart: string;
-  };
-  DetailsPublish: {
-    depart: string;
-    arrival: string;
-  };
-};
+import { RootStackParamList } from "./types/type";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -117,9 +91,18 @@ export default function App() {
             <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen name="DeparturePublish" component={DeparturePublishScreen} />
-            <Stack.Screen name="ArrivalPublish" component={ArrivalPublishScreen} />
-            <Stack.Screen name="DetailsPublish" component={DetailsPublishScreen} />
+            <Stack.Screen
+              name="DeparturePublish"
+              component={DeparturePublishScreen}
+            />
+            <Stack.Screen
+              name="ArrivalPublish"
+              component={ArrivalPublishScreen}
+            />
+            <Stack.Screen
+              name="DetailsPublish"
+              component={DetailsPublishScreen}
+            />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </View>

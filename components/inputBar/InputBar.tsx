@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-
-type InputBarProps = {
-  onChangeText: (text: string) => void;
-  value: string;
-  placeholder?: string;
-};
+import { InputBarProps } from "../../types/type";
 
 const InputBar = ({ onChangeText, value, placeholder }: InputBarProps) => {
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");

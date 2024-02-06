@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { RootStackParamList } from "../../types/type";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

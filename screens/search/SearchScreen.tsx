@@ -1,10 +1,10 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { View, Text, ActivityIndicator, FlatList } from "react-native";
-import { RootStackParamList } from "../../App";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { RouteProp } from "@react-navigation/native";
 import SearchCard from "../../components/searchCard/searchCard";
 import { useCallback, useEffect, useState } from "react";
+import { RootStackParamList, Traject } from "../../types/type";
 
 type SearchScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -18,9 +18,6 @@ type SearchScreenProps = {
   navigation: SearchScreenNavigationProp;
 };
 
-type Traject = {
-  id: number;
-};
 const MAX_RESULTS = 40; // Simule une limite maximale de résultats
 
 const SearchScreen = ({ route, navigation }: SearchScreenProps) => {

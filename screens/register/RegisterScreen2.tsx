@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../types/type";
 
 type RegisterSecondScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

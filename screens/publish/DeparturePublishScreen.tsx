@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
 import InputBar from "../../components/inputBar/InputBar";
+import { RootStackParamList } from "../../types/type";
 
 type DeparturePublishScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
