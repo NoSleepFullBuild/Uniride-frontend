@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../types/type";
 
 type ConnexionScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

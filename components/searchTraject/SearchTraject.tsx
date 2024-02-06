@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { RootStackParamList } from "../../App";
 import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../types/type";
 
 type SearchTrajectProps = {
   navigation: NavigationProp<RootStackParamList>;

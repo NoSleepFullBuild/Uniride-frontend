@@ -10,13 +10,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import SearchTraject from "../searchTraject/SearchTraject";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
-
-export type SearchParams = {
-  depart: string;
-  destination: string;
-  date: Date;
-};
+import { RootStackParamList, SearchParams } from "../../types/type";
 
 type SearchBarProps = {
   searchParams: SearchParams;
@@ -25,10 +19,9 @@ type SearchBarProps = {
 
 const screenHeight = Dimensions.get("window").height;
 
-const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
+const SearchBar = ({ searchParams, navigation }: SearchBarProps) => {
   const { depart, destination, date } = searchParams;
 
-  const [bgColor, setBgColor] = useState("#09090b"); // bg-zinc-950
   const [iconsColor, setRightIconsColor] = useState("lightslategrey");
   const [textColor, setRightTextColor] = useState("text-white");
   const [subTextColor, setRightSubTextColor] = useState("text-slate-500");
@@ -111,4 +104,4 @@ const SearchBAr = ({ searchParams, navigation }: SearchBarProps) => {
   );
 };
 
-export default SearchBAr;
+export default SearchBar;
