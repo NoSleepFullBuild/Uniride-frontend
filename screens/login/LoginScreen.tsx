@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../types/type";
+import axios from "axios";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -30,31 +31,22 @@ const LoginScreen = ({ navigation }: Props) => {
   };
 
   const handleLogin = async () => {
+    console.log({ email, password });
     try {
       const loginData = {
         email: email,
         password: password,
       };
-      
-      const response = await fetch(
-        "http://localhost:3002/api/gateway/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(loginData),
-        }
-      );
 
-      const responseData = await response.json();
+      const endpoint =
+        process.env.EXPO_PUBLIC_GATEWAY_URL+"/api/gateway/login";
+      const res = await axios.post(endpoint, loginData);
 
-      if (response.ok) {
-        console.log("Connexion réussie:", responseData);
-        // Enregistrer le token d'authentification dans le stockage local (appContext)
+      if (res.status === 200) {
+        console.log("Login successful");
         navigation.replace("Home");
       } else {
-        console.error("Erreur de connexion:", responseData);
+        console.log("Login failed", res);
       }
     } catch (error) {
       console.error("Erreur de requête:", error);

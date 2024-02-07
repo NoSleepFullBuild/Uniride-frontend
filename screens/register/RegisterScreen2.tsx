@@ -63,7 +63,7 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
       );
 
       if (res.status === 201) {
-        navigation.replace("Home");
+        navigation.replace("Login");
       } else {
         console.error("Erreur de connexion:", res);
       }
