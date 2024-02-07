@@ -29,9 +29,36 @@ const LoginScreen = ({ navigation }: Props) => {
     setRightIcon(rightIcon === "eye" ? "eye-slash" : "eye");
   };
 
-  const handleLogin = () => {
-    console.log({ email, password });
-    navigation.replace("Home");
+  const handleLogin = async () => {
+    try {
+      const loginData = {
+        email: email,
+        password: password,
+      };
+      
+      const response = await fetch(
+        "http://localhost:3002/api/gateway/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        }
+      );
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log("Connexion réussie:", responseData);
+        // Enregistrer le token d'authentification dans le stockage local (appContext)
+        navigation.replace("Home");
+      } else {
+        console.error("Erreur de connexion:", responseData);
+      }
+    } catch (error) {
+      console.error("Erreur de requête:", error);
+    }
   };
 
   return (

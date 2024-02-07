@@ -26,9 +26,8 @@ const RegisterScreen = ({ navigation }: Props) => {
     setPhoneNumber(number);
   };
 
-  const handleRegister = () => {
-    console.log(lastName, firstName, phoneNumber);
-    navigation.push("RegisterSecond", {
+  const handleRegister = async () => {
+    navigation.navigate("RegisterSecond", {
       lastName,
       firstName,
       phoneNumber,

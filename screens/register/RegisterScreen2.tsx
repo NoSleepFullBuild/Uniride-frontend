@@ -8,6 +8,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types/type";
+import axios from "axios";
 
 type RegisterSecondScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -43,9 +44,32 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
     setRightIcon(rightIcon === "eye" ? "eye-slash" : "eye");
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     console.log({ lastName, firstName, phoneNumber, email, password });
-    navigation.replace("Home");
+    try {
+      const registerData = {
+        firstname: firstName,
+        lastname: lastName,
+        username: firstName + "_" + lastName,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+      };
+
+      const endpoint = process.env.EXPO_PUBLIC_GATEWAY_URL+"/api/gateway/register";
+      const res = await axios.post(
+        endpoint,
+        registerData
+      );
+
+      if (res.status === 201) {
+        navigation.replace("Home");
+      } else {
+        console.error("Erreur de connexion:", res);
+      }
+    } catch (error) {
+      console.error("Erreur de requête:", error);
+    }
   };
 
   return (
