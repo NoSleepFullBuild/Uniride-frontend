@@ -12,7 +12,6 @@ import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import SearchScreen from "./screens/search/SearchScreen";
-import { AppProvider } from "./context/AppContext";
 import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
@@ -78,35 +77,33 @@ function MenuApp() {
 
 export default function App() {
   return (
-    <AppProvider>
-      <NavigationContainer>
-        <View className="flex-1 bg-zinc-800">
-          <Stack.Navigator
-            initialRouteName="Connexion"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Home" component={MenuApp} />
-            <Stack.Screen name="Connexion" component={ConnexionScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen
-              name="DeparturePublish"
-              component={DeparturePublishScreen}
-            />
-            <Stack.Screen
-              name="ArrivalPublish"
-              component={ArrivalPublishScreen}
-            />
-            <Stack.Screen
-              name="DetailsPublish"
-              component={DetailsPublishScreen}
-            />
-          </Stack.Navigator>
-          <StatusBar style="auto" />
-        </View>
-      </NavigationContainer>
-    </AppProvider>
+    <NavigationContainer>
+      <View className="flex-1 bg-zinc-800">
+        <Stack.Navigator
+          initialRouteName="Connexion"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Home" component={MenuApp} />
+          <Stack.Screen name="Connexion" component={ConnexionScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen
+            name="DeparturePublish"
+            component={DeparturePublishScreen}
+          />
+          <Stack.Screen
+            name="ArrivalPublish"
+            component={ArrivalPublishScreen}
+          />
+          <Stack.Screen
+            name="DetailsPublish"
+            component={DetailsPublishScreen}
+          />
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </View>
+    </NavigationContainer>
   );
 }

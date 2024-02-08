@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../types/type";
 import axios from "axios";
+import { storeToken } from "../../utils/authUtils";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -31,25 +32,32 @@ const LoginScreen = ({ navigation }: Props) => {
   };
 
   const handleLogin = async () => {
-    console.log({ email, password });
     try {
+      if (!email || !password) {
+        console.error("Email and password are required");
+        return;
+      }
+
+      const emailPattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+      if (!emailPattern.test(email)) {
+        console.error("Invalid email format");
+        return;
+      }
+
       const loginData = {
         email: email,
         password: password,
       };
-
       const endpoint =
-        process.env.EXPO_PUBLIC_GATEWAY_URL+"/api/gateway/login";
-      const res = await axios.post(endpoint, loginData);
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/login";
 
+      const res = await axios.post(endpoint, loginData);
       if (res.status === 200) {
-        console.log("Login successful");
+        await storeToken(res.data.data.token);
         navigation.replace("Home");
-      } else {
-        console.log("Login failed", res);
       }
-    } catch (error) {
-      console.error("Erreur de requête:", error);
+    } catch (error: any) {
+      console.error("Loging error:", error.response.data.error);
     }
   };
 

@@ -29,9 +29,11 @@ type Props = {
 const RegisterScreen2 = ({ route, navigation }: Props) => {
   const { lastName, firstName, phoneNumber } = route.params;
 
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
+  const usernameRef = useRef<TextInput>(null);
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
 
@@ -45,12 +47,12 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
   };
 
   const handleRegister = async () => {
-    console.log({ lastName, firstName, phoneNumber, email, password });
+    console.log({ lastName, firstName, phoneNumber, email, password, username });
     try {
       const registerData = {
         firstname: firstName,
         lastname: lastName,
-        username: firstName + "_" + lastName,
+        username: username,
         email: email,
         password: password,
         phoneNumber: phoneNumber,
@@ -80,7 +82,22 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <Text className="self-stretch flex-row items-center justify-start pl-10 text-2xl pb-5 mt-2.5">Confirmer vos identifiants</Text>
+      <Text className="self-stretch flex-row items-center justify-start pl-10 text-2xl pb-5 mt-2.5">Renseignez vos identifiants</Text>
+
+      <View className="flex-row items-center justify-center px-2.5 border-b border-gray-400 rounded w-4/5 mb-6">
+        <TextInput
+          className="flex-1 rounded text-base text-gray-800 h-10"
+          placeholder="Votre pseudo"
+          onChangeText={setUsername}
+          autoCorrect={false}
+          autoFocus={true}
+          textContentType="username"
+          maxLength={50}
+          returnKeyType="next"
+          onSubmitEditing={() => emailRef.current?.focus()}
+          ref={usernameRef}
+        />
+      </View>
 
       <View className="flex-row items-center justify-center px-2.5 border-b border-gray-400 rounded w-4/5 mb-6">
         <TextInput
@@ -88,7 +105,6 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
           placeholder="Votre email"
           onChangeText={setEmail}
           autoCorrect={false}
-          autoFocus={true}
           inputMode="email"
           textContentType="emailAddress"
           maxLength={50}
