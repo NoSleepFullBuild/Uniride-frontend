@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../types/type";
 import axios from "axios";
-import { storeToken } from "../../utils/authUtils";
+import { storeLoginToken } from "../../utils/authUtils";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -53,11 +53,14 @@ const LoginScreen = ({ navigation }: Props) => {
 
       const res = await axios.post(endpoint, loginData);
       if (res.status === 200) {
-        await storeToken(res.data.data.token);
-        navigation.replace("Home");
+        await storeLoginToken(res.data.data.token);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
       }
     } catch (error: any) {
-      console.error("Loging error:", error.response.data.error);
+      console.error("Loging error:", error.response?.data?.error || error.message);
     }
   };
 

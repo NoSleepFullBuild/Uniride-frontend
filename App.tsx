@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,6 +16,11 @@ import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import { RootStackParamList } from "./types/type";
+import { getLoginToken, storeLoginToken } from "./utils/authUtils";
+
+type Props = {
+  navigation: any;
+};
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -76,11 +81,34 @@ function MenuApp() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginToken();
+  }, []);
+
+  const checkLoginToken = async () => {
+    try {
+      const loginToken = await getLoginToken();
+      setIsLoggedIn(!!loginToken);
+    } catch (error) {
+      console.error("Error checking login token:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <View className="flex-1 bg-zinc-800" />;
+  }
+
+  
   return (
     <NavigationContainer>
       <View className="flex-1 bg-zinc-800">
         <Stack.Navigator
-          initialRouteName="Connexion"
+          initialRouteName={isLoggedIn ? "Home" : "Connexion"}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Home" component={MenuApp} />
