@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../types/type";
 import axios from "axios";
 import { storeLoginToken } from "../../utils/authUtils";
+import { emailPattern, passwordPattern } from "../../utils/regexUtils";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -33,14 +34,23 @@ const LoginScreen = ({ navigation }: Props) => {
 
   const handleLogin = async () => {
     try {
+      const errors = [];
+
       if (!email || !password) {
         console.error("Email and password are required");
         return;
       }
-
-      const emailPattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+  
       if (!emailPattern.test(email)) {
-        console.error("Invalid email format");
+        errors.push("Invalid email format");
+      }
+  
+      if (!passwordPattern.test(password)) {
+        errors.push("Invalid password format");
+      }
+  
+      if (errors.length > 0) {
+        errors.forEach(error => console.error(error));
         return;
       }
 

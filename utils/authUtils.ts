@@ -10,8 +10,7 @@ export const storeLoginToken = async (token: string): Promise<void> => {
 
 export const getLoginToken = async (): Promise<string | null>  => {
   try {
-    const token = await AsyncStorage.getItem("login-token");
-    return token;
+    return await AsyncStorage.getItem("login-token");
   } catch (error: any) {
     throw new Error("Failed to retrieve token");
   }

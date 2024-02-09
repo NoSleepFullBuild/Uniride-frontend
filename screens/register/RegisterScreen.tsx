@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types/type";
+import { namePattern, phonePattern } from "../../utils/regexUtils";
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -21,12 +22,42 @@ const RegisterScreen = ({ navigation }: Props) => {
   const firstNameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);
 
-  const validatePhoneNumber = (number: string) => {
-    number = number.replace(/\s/g, "");
-    setPhoneNumber(number);
+  const validatePhoneNumber = (phone: string) => {
+    const phoneNumber = phone.replace(/\s/g, "");
+    setPhoneNumber(phoneNumber);
   };
 
-  const handleRegister = async () => {
+  const trimFirstName = (firstName: string) => {
+    return setFirstName(firstName.trim());
+  }
+
+  const trimLastName = (lastName: string) => {
+    return setLastName(lastName.trim());
+  }
+
+  const handleRegister = () => {
+    const errors = [];
+
+    if (!lastName || !firstName || !phoneNumber) {
+      console.error("All fields are required");
+      return;
+    }
+
+    if (!namePattern.test(lastName) || !namePattern.test(firstName)) {
+      errors.push(
+        "First name and last name must be between 2 and 50 characters"
+      );
+    }
+
+    if (!phonePattern.test(phoneNumber)) {
+      errors.push("Invalid phone number");
+    }
+
+    if (errors.length > 0) {
+      errors.forEach((error) => console.error(error));
+      return;
+    }
+
     navigation.navigate("RegisterSecond", {
       lastName,
       firstName,
@@ -54,7 +85,7 @@ const RegisterScreen = ({ navigation }: Props) => {
           <TextInput
             className="h-10 rounded text-base text-gray-800"
             placeholder="Votre nom"
-            onChangeText={setLastName}
+            onChangeText={trimLastName}
             autoCorrect={false}
             autoFocus={true}
             textContentType="familyName"
@@ -71,7 +102,7 @@ const RegisterScreen = ({ navigation }: Props) => {
           <TextInput
             className="h-10 rounded text-base text-gray-800"
             placeholder="Votre prénom"
-            onChangeText={setFirstName}
+            onChangeText={trimFirstName}
             autoCorrect={false}
             textContentType="givenName"
             maxLength={20}

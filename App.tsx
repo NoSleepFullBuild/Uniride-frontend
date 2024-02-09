@@ -91,6 +91,7 @@ export default function App() {
   const checkLoginToken = async () => {
     try {
       const loginToken = await getLoginToken();
+      await storeLoginToken(""); // To delete after testing
       setIsLoggedIn(!!loginToken);
     } catch (error) {
       console.error("Error checking login token:", error);
