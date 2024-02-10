@@ -18,10 +18,6 @@ import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import { RootStackParamList } from "./types/type";
 import { getLoginToken, storeLoginToken } from "./utils/authUtils";
 
-type Props = {
-  navigation: any;
-};
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
