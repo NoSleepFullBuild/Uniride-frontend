@@ -17,6 +17,7 @@ import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import { RootStackParamList } from "./types/type";
 import { getLoginToken, storeLoginToken } from "./utils/authUtils";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -87,10 +88,24 @@ export default function App() {
   const checkLoginToken = async () => {
     try {
       const loginToken = await getLoginToken();
-      await storeLoginToken(""); // To delete after testing
-      setIsLoggedIn(!!loginToken);
-    } catch (error) {
-      console.error("Error checking login token:", error);
+
+      if (loginToken) {
+        const endpoint = process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/verify-token";
+        
+        const res = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        });
+
+        if (res.status === 200) {
+          setIsLoggedIn(true);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error: any) {
+      console.error("Error checking login token:", error.response?.data?.error || error.message);
     } finally {
       setIsLoading(false);
     }
