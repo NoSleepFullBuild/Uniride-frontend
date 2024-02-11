@@ -15,6 +15,7 @@ import SearchScreen from "./screens/search/SearchScreen";
 import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
+import ProfilScreen from "./screens/profil/ProfilScreen";
 import { RootStackParamList } from "./types/type";
 import { getLoginToken } from "./utils/authUtils";
 import axios from "axios";
@@ -66,7 +67,7 @@ function MenuApp() {
       />
       <Tab.Screen
         name="Profil"
-        component={HomeScreen}
+        component={ProfilScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Icon name="user-o" color={color} size={size} />
@@ -144,6 +145,7 @@ export default function App() {
             name="DetailsPublish"
             component={DetailsPublishScreen}
           />
+          <Stack.Screen name="Profil" component={ProfilScreen} />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </View>
