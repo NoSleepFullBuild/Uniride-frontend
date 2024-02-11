@@ -16,7 +16,7 @@ import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import { RootStackParamList } from "./types/type";
-import { getLoginToken, storeLoginToken } from "./utils/authUtils";
+import { getLoginToken } from "./utils/authUtils";
 import axios from "axios";
 
 const Tab = createBottomTabNavigator();
@@ -90,8 +90,9 @@ export default function App() {
       const loginToken = await getLoginToken();
 
       if (loginToken) {
-        const endpoint = process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/verify-token";
-        
+        const endpoint =
+          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/verify-token";
+
         const res = await axios.get(endpoint, {
           headers: {
             Authorization: `Bearer ${loginToken}`,
@@ -105,7 +106,10 @@ export default function App() {
         setIsLoggedIn(false);
       }
     } catch (error: any) {
-      console.error("Error checking login token:", error.response?.data?.error || error.message);
+      console.error(
+        "Error checking login token:",
+        error.response?.data?.error || error.message
+      );
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +119,6 @@ export default function App() {
     return <View className="flex-1 bg-zinc-800" />;
   }
 
-  
   return (
     <NavigationContainer>
       <View className="flex-1 bg-zinc-800">
