@@ -92,7 +92,7 @@ export default function App() {
 
       if (loginToken) {
         const endpoint =
-          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/verify-token";
+          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/verify-token";
 
         const res = await axios.get(endpoint, {
           headers: {
@@ -103,11 +103,9 @@ export default function App() {
         if (res.status === 200) {
           setIsLoggedIn(true);
         }
-      } else {
-        setIsLoggedIn(false);
       }
     } catch (error: any) {
-      console.error(
+      console.debug(
         "Error checking login token:",
         error.response?.data?.error || error.message
       );

@@ -55,7 +55,7 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
         return;
       }
 
-      if (usernamePattern.test(username)) {
+      if (!usernamePattern.test(username)) {
         errors.push(
           "Username must be between 3 and 20 characters and contain only letters, numbers and _-"
         );
@@ -85,13 +85,14 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
         phoneNumber: phoneNumber,
       };
       const endpoint =
-        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/register";
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/register";
 
       const res = await axios.post(endpoint, registerData);
       if (res.status === 201) {
         navigation.replace("Login");
       }
     } catch (error: any) {
+      console.log(error);
       console.error("Register error:", error.response?.data?.error || error.message);
     }
   };

@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }: Props) => {
         password: password,
       };
       const endpoint =
-        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/login";
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/login";
 
       const res = await axios.post(endpoint, loginData);
       if (res.status === 200) {
