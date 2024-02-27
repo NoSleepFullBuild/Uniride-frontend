@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,11 +12,12 @@ import RegisterScreen2 from "./screens/register/RegisterScreen2";
 import LoginScreen from "./screens/login/LoginScreen";
 import HomeScreen from "./screens/home/HomeScreen";
 import SearchScreen from "./screens/search/SearchScreen";
-import { AppProvider } from "./context/AppContext";
 import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import { RootStackParamList } from "./types/type";
+import { getLoginToken } from "./utils/authUtils";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -77,36 +78,75 @@ function MenuApp() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginToken();
+  }, []);
+
+  const checkLoginToken = async () => {
+    try {
+      const loginToken = await getLoginToken();
+
+      if (loginToken) {
+        const endpoint =
+          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/verify-token";
+
+        const res = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        });
+
+        if (res.status === 200) {
+          setIsLoggedIn(true);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error: any) {
+      console.error(
+        "Error checking login token:",
+        error.response?.data?.error || error.message
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <View className="flex-1 bg-zinc-800" />;
+  }
+
   return (
-    <AppProvider>
-      <NavigationContainer>
-        <View className="flex-1 bg-zinc-800">
-          <Stack.Navigator
-            initialRouteName="Connexion"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="Home" component={MenuApp} />
-            <Stack.Screen name="Connexion" component={ConnexionScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen
-              name="DeparturePublish"
-              component={DeparturePublishScreen}
-            />
-            <Stack.Screen
-              name="ArrivalPublish"
-              component={ArrivalPublishScreen}
-            />
-            <Stack.Screen
-              name="DetailsPublish"
-              component={DetailsPublishScreen}
-            />
-          </Stack.Navigator>
-          <StatusBar style="auto" />
-        </View>
-      </NavigationContainer>
-    </AppProvider>
+    <NavigationContainer>
+      <View className="flex-1 bg-zinc-800">
+        <Stack.Navigator
+          initialRouteName={isLoggedIn ? "Home" : "Connexion"}
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Home" component={MenuApp} />
+          <Stack.Screen name="Connexion" component={ConnexionScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="RegisterSecond" component={RegisterScreen2} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen
+            name="DeparturePublish"
+            component={DeparturePublishScreen}
+          />
+          <Stack.Screen
+            name="ArrivalPublish"
+            component={ArrivalPublishScreen}
+          />
+          <Stack.Screen
+            name="DetailsPublish"
+            component={DetailsPublishScreen}
+          />
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </View>
+    </NavigationContainer>
   );
 }

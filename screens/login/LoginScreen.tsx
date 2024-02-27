@@ -3,6 +3,9 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { RootStackParamList } from "../../types/type";
+import axios from "axios";
+import { storeLoginToken } from "../../utils/authUtils";
+import { emailPattern, passwordPattern } from "../../utils/regexUtils";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,9 +32,46 @@ const LoginScreen = ({ navigation }: Props) => {
     setRightIcon(rightIcon === "eye" ? "eye-slash" : "eye");
   };
 
-  const handleLogin = () => {
-    console.log({ email, password });
-    navigation.replace("Home");
+  const handleLogin = async () => {
+    try {
+      const errors = [];
+
+      if (!email || !password) {
+        console.error("Email and password are required");
+        return;
+      }
+  
+      if (!emailPattern.test(email)) {
+        errors.push("Invalid email format");
+      }
+  
+      if (!passwordPattern.test(password)) {
+        errors.push("Invalid password format");
+      }
+  
+      if (errors.length > 0) {
+        errors.forEach(error => console.error(error));
+        return;
+      }
+
+      const loginData = {
+        email: email,
+        password: password,
+      };
+      const endpoint =
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/login";
+
+      const res = await axios.post(endpoint, loginData);
+      if (res.status === 200) {
+        await storeLoginToken(res.data.data.token);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        });
+      }
+    } catch (error: any) {
+      console.error("Loging error:", error.response?.data?.error || error.message);
+    }
   };
 
   return (
