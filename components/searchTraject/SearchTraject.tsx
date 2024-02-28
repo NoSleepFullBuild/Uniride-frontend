@@ -60,7 +60,7 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
             onChangeText={setDepart}
             textContentType="none"
             maxLength={50}
-            returnKeyType="next"
+            returnKeyType="default"
             onSubmitEditing={() => destinationRef.current?.focus()}
             ref={departRef}
           />
@@ -76,8 +76,8 @@ const SearchTraject = ({ navigation, onClose }: SearchTrajectProps) => {
             onChangeText={setDestination}
             textContentType="none"
             maxLength={50}
-            returnKeyType="next"
             ref={destinationRef}
+            returnKeyType="default"
           />
         </View>
         {/* Date Input */}

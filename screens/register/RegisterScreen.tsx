@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Keyboard } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types/type";
 import { namePattern, phonePattern } from "../../utils/regexUtils";
@@ -29,17 +29,18 @@ const RegisterScreen = ({ navigation }: Props) => {
 
   const trimFirstName = (firstName: string) => {
     return setFirstName(firstName.trim());
-  }
+  };
 
   const trimLastName = (lastName: string) => {
     return setLastName(lastName.trim());
-  }
+  };
 
   const handleRegister = () => {
     const errors = [];
 
     if (!lastName || !firstName || !phoneNumber) {
       console.error("All fields are required");
+      Keyboard.dismiss()
       return;
     }
 
@@ -47,14 +48,17 @@ const RegisterScreen = ({ navigation }: Props) => {
       errors.push(
         "First name and last name must be between 2 and 50 characters"
       );
+      Keyboard.dismiss()
     }
 
     if (!phonePattern.test(phoneNumber)) {
       errors.push("Invalid phone number");
+      Keyboard.dismiss()
     }
 
     if (errors.length > 0) {
       errors.forEach((error) => console.error(error));
+      Keyboard.dismiss()
       return;
     }
 
@@ -90,8 +94,9 @@ const RegisterScreen = ({ navigation }: Props) => {
             autoFocus={true}
             textContentType="familyName"
             maxLength={20}
-            returnKeyType="next"
-            onSubmitEditing={() => firstNameRef.current?.focus()}
+            returnKeyType="default"
+            onSubmitEditing={Keyboard.dismiss}
+            // onSubmitEditing={() => firstNameRef.current?.focus()}
             ref={lastNameRef}
           />
         </View>
@@ -106,8 +111,8 @@ const RegisterScreen = ({ navigation }: Props) => {
             autoCorrect={false}
             textContentType="givenName"
             maxLength={20}
-            returnKeyType="next"
-            onSubmitEditing={() => phoneRef.current?.focus()}
+            returnKeyType="default"
+            onSubmitEditing={Keyboard.dismiss}
             ref={firstNameRef}
           />
         </View>
@@ -124,8 +129,8 @@ const RegisterScreen = ({ navigation }: Props) => {
             textContentType="telephoneNumber"
             keyboardType="phone-pad"
             maxLength={13}
-            returnKeyType="next"
-            onSubmitEditing={handleRegister}
+            returnKeyType="default"
+            onSubmitEditing={Keyboard.dismiss}
             ref={phoneRef}
           />
         </View>

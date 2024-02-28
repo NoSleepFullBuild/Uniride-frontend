@@ -40,17 +40,17 @@ const LoginScreen = ({ navigation }: Props) => {
         console.error("Email and password are required");
         return;
       }
-  
+
       if (!emailPattern.test(email)) {
         errors.push("Invalid email format");
       }
-  
-      if (!passwordPattern.test(password)) {
-        errors.push("Invalid password format");
-      }
-  
+
+      // if (!passwordPattern.test(password)) {
+      //   errors.push("Invalid password format");
+      // }
+
       if (errors.length > 0) {
-        errors.forEach(error => console.error(error));
+        errors.forEach((error) => console.error(error));
         return;
       }
 
@@ -58,8 +58,7 @@ const LoginScreen = ({ navigation }: Props) => {
         email: email,
         password: password,
       };
-      const endpoint =
-        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/login";
+      const endpoint = "http://192.168.1.189:3002" + "/api/gateway/auth/login";
 
       const res = await axios.post(endpoint, loginData);
       if (res.status === 200) {
@@ -70,7 +69,10 @@ const LoginScreen = ({ navigation }: Props) => {
         });
       }
     } catch (error: any) {
-      console.error("Loging error:", error.response?.data?.error || error.message);
+      console.error(
+        "Loging error:",
+        error.response?.data?.error || error.message
+      );
     }
   };
 
@@ -97,8 +99,7 @@ const LoginScreen = ({ navigation }: Props) => {
         autoCorrect={false}
         textContentType="emailAddress"
         maxLength={100}
-        returnKeyType="next"
-        onSubmitEditing={() => passwordRef.current?.focus()}
+        returnKeyType="default"
         ref={emailRef}
       />
 
