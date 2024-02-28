@@ -96,7 +96,7 @@ export default function App() {
 
       if (loginToken) {
         const endpoint =
-          "http://192.168.1.189:3002" + "/api/gateway/auth/verify-token";
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/verify-token";
 
         const res = await axios.get(endpoint, {
           headers: {

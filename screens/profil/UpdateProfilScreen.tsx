@@ -157,7 +157,7 @@ const UpdateProfilScreen = ({ navigation }: Props) => {
   }, [loginToken]);
 
   if (!userId) {
-    return <Text>Chargement...</Text>;
+    return <View className="flex-1 bg-zinc-800" />;
   }
 
   return (
