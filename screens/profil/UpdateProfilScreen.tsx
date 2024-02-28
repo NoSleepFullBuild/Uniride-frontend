@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types/type";
-import { getLoginToken } from "../../utils/authUtils";
+import { getLoginToken, storeLoginToken } from "../../utils/authUtils";
 import axios from "axios";
 
-type ProfilScreenNavigationProp = StackNavigationProp<
+type UpdateProfilScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Profil"
+  "UpdateProfil"
 >;
 
 type Props = {
-  navigation: ProfilScreenNavigationProp;
+  navigation: UpdateProfilScreenNavigationProp;
 };
 
-const ProfilScreen = ({ navigation }: Props) => {
+const UpdateProfilScreen = ({ navigation }: Props) => {
   const [loginToken, setLoginToken] = useState("");
   const [userId, setUserId] = useState("");
 
@@ -24,10 +24,6 @@ const ProfilScreen = ({ navigation }: Props) => {
   const [vehicle, setVehicle] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-
-  const navigateToUpdateProfil = () => {
-    navigation.navigate("UpdateProfil");
-  }
 
   const fetchLoginToken = async () => {
     const token = await getLoginToken();
@@ -61,6 +57,95 @@ const ProfilScreen = ({ navigation }: Props) => {
     }
   };
 
+  const updateProfileData = async () => {
+    try {
+      const endpointUpdateProfile =
+        process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/users/" + userId;
+      const resUpdateProfile = await axios.put(
+        endpointUpdateProfile,
+        {
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          vehicle: vehicle,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        }
+      );
+      if (resUpdateProfile.status === 200) {
+        console.debug("Profile updated successfully");
+      }
+    } catch (error: any) {
+      console.debug(
+        "Failed to update profile data:",
+        error.response?.data?.error || error.message
+      );
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      if (loginToken) {
+        const endpointDisconnect =
+          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/logout";
+
+        const res = await axios.post(endpointDisconnect, null, {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        });
+
+        if (res.status !== 200) {
+          console.debug("Failed to add token to blacklist");
+        }
+        await storeLoginToken("");
+      }
+    } catch (error: any) {
+      console.error(
+        "Failed to logout",
+        error.response?.data?.error || error.message
+      );
+    } finally {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Connexion" }],
+      });
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      if (loginToken) {
+        const endpointDeleteAccount =
+          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/users/" + userId;
+
+        const res = await axios.delete(endpointDeleteAccount, {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        });
+
+        if (res.status === 200) {
+          await storeLoginToken("");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Connexion" }],
+          });
+        } else {
+          console.debug("Failed to delete account");
+        }
+      }
+    } catch (error: any) {
+      console.error(
+        "Failed to delete account",
+        error.response?.data?.error || error.message
+      );
+    }
+  };
+
   useEffect(() => {
     fetchLoginToken();
   }, []);
@@ -71,9 +156,9 @@ const ProfilScreen = ({ navigation }: Props) => {
     }
   }, [loginToken]);
 
-  if (!email || !phoneNumber || !username || !firstName || !lastName) {
+  if (!userId) {
     return <Text>Chargement...</Text>;
-  };
+  }
 
   return (
     <View className="flex-1 bg-zinc-950">
@@ -83,7 +168,7 @@ const ProfilScreen = ({ navigation }: Props) => {
         <Text className="text-white text-md mt-2">{phoneNumber}</Text>
       </View>
       <Text className="text-white text-xl font-bold mt-6 mx-5">
-        Mes informations personnelles
+        Gérez vos informations personnelles
       </Text>
       <View className="mx-5 mt-3">
         {/* Username */}
@@ -95,7 +180,6 @@ const ProfilScreen = ({ navigation }: Props) => {
             value={username}
             onChangeText={setUsername}
             placeholder="Entrez votre pseudonyme"
-            editable={false}
             className="text-white bg-zinc-900 py-2 px-4 rounded-lg"
           />
         </View>
@@ -106,7 +190,6 @@ const ProfilScreen = ({ navigation }: Props) => {
             value={firstName}
             onChangeText={setFirstName}
             placeholder="Entrez votre prénom"
-            editable={false}
             className="text-white bg-zinc-900 py-2 px-4 rounded-lg"
           />
         </View>
@@ -117,7 +200,6 @@ const ProfilScreen = ({ navigation }: Props) => {
             value={lastName}
             onChangeText={setLastName}
             placeholder="Entrez votre nom"
-            editable={false}
             className="text-white bg-zinc-900 py-2 px-4 rounded-lg"
           />
         </View>
@@ -130,17 +212,40 @@ const ProfilScreen = ({ navigation }: Props) => {
             value={vehicle}
             onChangeText={setVehicle}
             placeholder="Entrez votre véhicule"
-            editable={false}
             className="text-white bg-zinc-900 py-2 px-4 rounded-lg"
           />
         </View>
+        {/* Save changes Button */}
+        <TouchableOpacity
+          onPress={updateProfileData}
+          className="bg-blue-600 py-2 px-6 rounded-lg mt-1 mb-3"
+        >
+          <Text className="text-white font-bold text-lg">
+            Enregistrer les modifications
+          </Text>
+        </TouchableOpacity>
+        {/* add separator line */}
+        <View className="border-b-2 border-gray-400 mb-2" />
+        {/* Change Password Button */}
+        <TouchableOpacity className="bg-blue-600 py-2 px-6 rounded-lg mt-1 mb-3">
+          <Text className="text-white font-bold text-lg">
+            Changer le mot de passe
+          </Text>
+        </TouchableOpacity>
+        {/* Disconnect Button */}
+        <TouchableOpacity
+          onPress={handleSignOut}
+          className="bg-red-600 py-2 px-6 rounded-lg mb-3"
+        >
+          <Text className="text-white font-bold text-lg">Déconnexion</Text>
+        </TouchableOpacity>
         {/* Delete Account Button */}
         <TouchableOpacity
-          onPress={navigateToUpdateProfil}
-          className="py-2 mb-4 mt-4 items-end"
+          onPress={handleDeleteAccount}
+          className="bg-red-600 py-2 px-6 rounded-lg mb-4"
         >
-          <Text className="text-white font-semibold underline text-md">
-            Gérer mon compte -&gt;
+          <Text className="text-white font-bold text-lg">
+            Supprimer le compte
           </Text>
         </TouchableOpacity>
       </View>
@@ -148,4 +253,4 @@ const ProfilScreen = ({ navigation }: Props) => {
   );
 };
 
-export default ProfilScreen;
+export default UpdateProfilScreen;

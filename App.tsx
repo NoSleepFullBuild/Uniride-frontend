@@ -16,6 +16,7 @@ import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
 import ProfilScreen from "./screens/profil/ProfilScreen";
+import UpdateProfilScreen from "./screens/profil/UpdateProfilScreen";
 import { RootStackParamList } from "./types/type";
 import { getLoginToken } from "./utils/authUtils";
 import axios from "axios";
@@ -147,6 +148,7 @@ export default function App() {
             component={DetailsPublishScreen}
           />
           <Stack.Screen name="Profil" component={ProfilScreen} />
+          <Stack.Screen name="UpdateProfil" component={UpdateProfilScreen} />
         </Stack.Navigator>
         <StatusBar style="auto" />
       </View>

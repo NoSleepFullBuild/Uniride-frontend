@@ -62,6 +62,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
       const res = await axios.post(endpoint, loginData);
       if (res.status === 200) {
+        console.debug("Login success:", res.data.data.token);
         await storeLoginToken(res.data.data.token);
         navigation.reset({
           index: 0,
