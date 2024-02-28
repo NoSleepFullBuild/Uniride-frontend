@@ -92,7 +92,6 @@ const RegisterScreen2 = ({ route, navigation }: Props) => {
         navigation.replace("Login");
       }
     } catch (error: any) {
-      console.log(error);
       console.error("Register error:", error.response?.data?.error || error.message);
     }
   };

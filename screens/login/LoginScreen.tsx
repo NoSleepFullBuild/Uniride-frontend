@@ -40,14 +40,13 @@ const LoginScreen = ({ navigation }: Props) => {
         console.error("Email and password are required");
         return;
       }
-
       if (!emailPattern.test(email)) {
         errors.push("Invalid email format");
       }
 
-      // if (!passwordPattern.test(password)) {
-      //   errors.push("Invalid password format");
-      // }
+      if (!passwordPattern.test(password)) {
+        errors.push("Invalid password format");
+      }
 
       if (errors.length > 0) {
         errors.forEach((error) => console.error(error));

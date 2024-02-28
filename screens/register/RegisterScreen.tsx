@@ -29,18 +29,18 @@ const RegisterScreen = ({ navigation }: Props) => {
 
   const trimFirstName = (firstName: string) => {
     return setFirstName(firstName.trim());
-  };
+  }
 
   const trimLastName = (lastName: string) => {
     return setLastName(lastName.trim());
-  };
+  }
 
   const handleRegister = () => {
     const errors = [];
 
     if (!lastName || !firstName || !phoneNumber) {
       console.error("All fields are required");
-      Keyboard.dismiss()
+      Keyboard.dismiss();
       return;
     }
 
@@ -48,17 +48,17 @@ const RegisterScreen = ({ navigation }: Props) => {
       errors.push(
         "First name and last name must be between 2 and 50 characters"
       );
-      Keyboard.dismiss()
+      Keyboard.dismiss();
     }
 
     if (!phonePattern.test(phoneNumber)) {
       errors.push("Invalid phone number");
-      Keyboard.dismiss()
+      Keyboard.dismiss();
     }
 
     if (errors.length > 0) {
       errors.forEach((error) => console.error(error));
-      Keyboard.dismiss()
+      Keyboard.dismiss();
       return;
     }
 
