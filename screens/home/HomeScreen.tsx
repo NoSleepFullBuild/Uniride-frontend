@@ -21,13 +21,16 @@ const HomeScreen = ({ navigation }: Props) => {
         h-full"
       />
 
-      <View className="px-7 mt-[20%] mb-4">
+      <View className="px-7 mt-[25%] mb-4">
         <Text className="text-3xl font-bold text-center text-white">
-          Partenaires d'étude, Compagnons de route.
+          Trouver une place
+        </Text>
+        <Text className="text-xl font-bold text-center text-white">
+        pour des trajets partagés
         </Text>
       </View>
 
-      <View className="mx-7 mt-[35%]">
+      <View className="mx-7 mt-[15%]">
         <SearchTraject navigation={navigation} />
       </View>
     </ImageBackground>

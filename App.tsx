@@ -29,12 +29,14 @@ function MenuApp() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "neutral-950",
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: "rgba(255,255,255,0.3)",
           shadowOffset: { width: 0, height: 0 },
           shadowColor: "rgba(0,0,0,0.05)",
           shadowOpacity: 1,
           elevation: 0,
+          paddingTop: 10,
+          backgroundColor: "rgba(34,36,40,1)",
         },
       }}
     >
@@ -42,8 +44,9 @@ function MenuApp() {
         name="Rechercher"
         component={HomeScreen}
         options={{
+          tabBarActiveTintColor: "rgba(255,255,255,1)",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="search" color={color} size={size} />
+            <Icon name="search" color={color} size={20} />
           ),
         }}
       />
@@ -52,7 +55,7 @@ function MenuApp() {
         component={DeparturePublishScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="plus-square-o" color={color} size={size} />
+            <Icon name="plus-square-o" color={color} size={20} />
           ),
         }}
       />
@@ -61,7 +64,7 @@ function MenuApp() {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="history" color={color} size={size} />
+            <Icon name="history" color={color} size={20} />
           ),
         }}
       />
@@ -70,7 +73,7 @@ function MenuApp() {
         component={ProfilScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="user-o" color={color} size={size} />
+            <Icon name="user-o" color={color} size={20} />
           ),
         }}
       />
@@ -92,7 +95,7 @@ export default function App() {
 
       if (loginToken) {
         const endpoint =
-          process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/verify-token";
+          "http://192.168.1.189:3002" + "/api/gateway/auth/verify-token";
 
         const res = await axios.get(endpoint, {
           headers: {
