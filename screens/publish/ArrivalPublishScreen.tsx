@@ -32,7 +32,7 @@ const ArrivalPublishScreen = ({ route, navigation }: Props) => {
 
   return (
     <View className="flex-1 bg-zinc-950">
-      <View className="flex mt-[10%] mb-4 mx-5">
+      <View className="mt-[10%] mb-4 mx-5">
         <Text className="text-white text-3xl font-bold mt-6">
           Où allez-vous ?
         </Text>
@@ -48,7 +48,7 @@ const ArrivalPublishScreen = ({ route, navigation }: Props) => {
         className="bg-cyan-600 py-4 mt-3 rounded-xl opacity-80 mx-5"
         onPress={handleContinue}
       >
-        <Text className={"text-center font-bold text-base "}>Suivant</Text>
+        <Text className={"text-center font-bold text-base text-white"}>Suivant</Text>
       </TouchableOpacity>
     </View>
   );

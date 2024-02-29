@@ -23,6 +23,8 @@ export type RootStackParamList = {
     depart: string;
     arrival: string;
   };
+  Profil: undefined;
+  UpdateProfil: undefined;
 };
 
 export type SearchParams = {

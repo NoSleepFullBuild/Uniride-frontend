@@ -34,7 +34,8 @@ const SearchCard = () => {
         <View className="w-16 max-w-xs">
         <Image
           source={require("../../assets/login/bg.jpg")}
-          className="w-12 h-12 rounded-full mr-2 border-2 border-slate-500"
+          className="w-12 h-12 rounded-full mr-2 border-2"
+          style={{ borderColor: "#3b3b3b" }}
         />
         </View>
         <View>
