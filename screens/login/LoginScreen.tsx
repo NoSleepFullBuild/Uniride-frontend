@@ -19,6 +19,9 @@ type Props = {
 const LoginScreen = ({ navigation }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [error, setRequestError] = useState("");
 
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
@@ -33,46 +36,47 @@ const LoginScreen = ({ navigation }: Props) => {
   };
 
   const handleLogin = async () => {
+    setEmailError("");
+    setPasswordError("");
+    let hasError = false;
+
+    if (!email) {
+      setEmailError("L'email est requis");
+      hasError = true;
+    } else if (!emailPattern.test(email)) {
+      setEmailError("Format d'email invalide");
+      hasError = true;
+    }
+
+    if (!password) {
+      console.log(password);
+      setPasswordError("Le mot de passe est requis");
+      hasError = true;
+    } else if (!passwordPattern.test(password)) {
+      setPasswordError("Format de mot de passe invalide");
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    const endpoint =
+      process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/login";
+
     try {
-      const errors = [];
+      const response = await axios.post(endpoint, {
+        email,
+        password,
+      });
 
-      if (!email || !password) {
-        console.error("Email and password are required");
-        return;
+      console.log(response.data);
+      if (!response.data.token)
+        return setRequestError("Identifiants invalides");
+      if (response.data.token) {
+        storeLoginToken(response.data.token);
+        navigation.replace("Home");
       }
-      if (!emailPattern.test(email)) {
-        errors.push("Invalid email format");
-      }
-
-      if (!passwordPattern.test(password)) {
-        errors.push("Invalid password format");
-      }
-
-      if (errors.length > 0) {
-        errors.forEach((error) => console.error(error));
-        return;
-      }
-
-      const loginData = {
-        email: email,
-        password: password,
-      };
-      const endpoint = process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/auth/login";
-
-      const res = await axios.post(endpoint, loginData);
-      if (res.status === 200) {
-        console.debug("Login success:", res.data.data.token);
-        await storeLoginToken(res.data.data.token);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Home" }],
-        });
-      }
-    } catch (error: any) {
-      console.error(
-        "Loging error:",
-        error.response?.data?.error || error.message
-      );
+    } catch (error) {
+      setRequestError(error.response.data);
     }
   };
 
@@ -103,6 +107,11 @@ const LoginScreen = ({ navigation }: Props) => {
         ref={emailRef}
       />
 
+      {/* Affichage conditionnel des erreurs */}
+      {emailError !== "" && (
+        <Text className="text-red-500 mb-2">{emailError}</Text>
+      )}
+
       <View className="w-4/5 flex-row border border-gray-400 rounded mb-2.5">
         <TextInput
           className="flex-1 p-2.5"
@@ -124,9 +133,20 @@ const LoginScreen = ({ navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
+      {passwordError !== "" && (
+        <Text className="text-red-500 mb-2">{passwordError}</Text>
+      )}
+
       <TouchableOpacity>
         <Text className="mt-1.5 mb-2.5 underline">Mot de passe oublié ?</Text>
       </TouchableOpacity>
+
+      <Text className="text-center mx-5  mt-2.5">
+        En vous connectant, vous acceptez nos conditions générales d'utilisation
+        et notre politique de confidentialité.
+      </Text>
+
+      {error !== "" && <Text className="text-red-500 mt-2.5">{error}</Text>}
 
       <TouchableOpacity
         className="bg-black py-3.5 px-8 mt-5 rounded-full w-4/5 items-center"
@@ -135,7 +155,7 @@ const LoginScreen = ({ navigation }: Props) => {
         <Text className="text-base text-white">Me connecter</Text>
       </TouchableOpacity>
 
-      <View className="flex-row items-center mt-2.5">
+      <View className="flex-row items-center mt-4">
         <Text>Pas encore de compte ?</Text>
         <TouchableOpacity onPress={() => navigation.replace("Register")}>
           <Text className="ml-1 underline">M'inscrire</Text>

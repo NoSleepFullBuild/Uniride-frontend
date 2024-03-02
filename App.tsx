@@ -107,11 +107,13 @@ export default function App() {
         if (res.status === 200) {
           setIsLoggedIn(true);
         }
+    }
     } catch (error: any) {
       console.debug(
         "Error checking login token:",
         error.response?.data?.error || error.message
       );
+      
     } finally {
       setIsLoading(false);
     }
