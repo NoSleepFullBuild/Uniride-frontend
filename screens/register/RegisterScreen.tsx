@@ -18,6 +18,10 @@ const RegisterScreen = ({ navigation }: Props) => {
   const [firstName, setFirstName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+    const [lastNameError, setLastNameError] = useState("");
+    const [firstNameError, setFirstNameError] = useState("");
+    const [phoneNumberError, setPhoneNumberError] = useState("");
+
   const lastNameRef = useRef<TextInput>(null);
   const firstNameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);
@@ -36,31 +40,45 @@ const RegisterScreen = ({ navigation }: Props) => {
   }
 
   const handleRegister = () => {
-    const errors = [];
+    let hasError = false;
 
-    if (!lastName || !firstName || !phoneNumber) {
-      console.error("All fields are required");
-      Keyboard.dismiss();
-      return;
+    if(!lastName){
+        setLastNameError("Last name is required");
+        Keyboard.dismiss()
+        hasError = true;
     }
 
-    if (!namePattern.test(lastName) || !namePattern.test(firstName)) {
-      errors.push(
-        "First name and last name must be between 2 and 50 characters"
-      );
-      Keyboard.dismiss();
+    if(!firstName){
+        setFirstNameError("First name is required");
+        Keyboard.dismiss()
+        hasError = true;
+    }
+
+    if(!phoneNumber){
+        setPhoneNumberError("Phone number is required");
+        Keyboard.dismiss()
+        hasError = true;
+    }
+
+    if(!namePattern.test(lastName)){
+        setLastNameError("Invalid last name");
+        Keyboard.dismiss()
+        hasError = true;
+    }
+
+    if(!namePattern.test(firstName)){
+        setFirstNameError("Invalid first name");
+        Keyboard.dismiss()
+        hasError = true;
     }
 
     if (!phonePattern.test(phoneNumber)) {
-      errors.push("Invalid phone number");
-      Keyboard.dismiss();
+        setPhoneNumberError("Invalid phone number");
+        Keyboard.dismiss()
+        hasError = true;
     }
 
-    if (errors.length > 0) {
-      errors.forEach((error) => console.error(error));
-      Keyboard.dismiss();
-      return;
-    }
+    if(hasError) return;
 
     navigation.navigate("RegisterSecond", {
       lastName,
@@ -102,6 +120,10 @@ const RegisterScreen = ({ navigation }: Props) => {
         </View>
       </View>
 
+      {lastNameError ? (
+        <Text className="text-red-500 text-sm mb-2">{lastNameError}</Text>
+        ) : null}
+
       <View className="flex-row items-center justify-center px-2.5 border-b border-gray-300 rounded w-4/5 mb-6">
         <View className="flex-1 rounded">
           <TextInput
@@ -117,6 +139,10 @@ const RegisterScreen = ({ navigation }: Props) => {
           />
         </View>
       </View>
+
+        {firstNameError ? (
+            <Text className="text-red-500 text-sm mb-2">{firstNameError}</Text>
+            ) : null}
 
       <View className="flex-row items-center justify-center px-2.5 border-b border-gray-300 rounded w-4/5 mb-6">
         <View className="flex-1 rounded">
@@ -135,6 +161,10 @@ const RegisterScreen = ({ navigation }: Props) => {
           />
         </View>
       </View>
+
+        {phoneNumberError ? (
+            <Text className="text-red-500 text-sm mb-2">{phoneNumberError}</Text>
+            ) : null}
 
       <TouchableOpacity
         className="bg-black py-3.5 px-8 rounded-full ml-1.25 mt-3 w-4/5"
