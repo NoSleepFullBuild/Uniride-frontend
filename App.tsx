@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import "./global.css";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -6,19 +7,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import ConnexionScreen from "./screens/connexion/ConnexionScreen";
-import RegisterScreen from "./screens/register/RegisterScreen";
-import RegisterScreen2 from "./screens/register/RegisterScreen2";
-import LoginScreen from "./screens/login/LoginScreen";
-import HomeScreen from "./screens/home/HomeScreen";
-import SearchScreen from "./screens/search/SearchScreen";
-import DeparturePublishScreen from "./screens/publish/DeparturePublishScreen";
-import ArrivalPublishScreen from "./screens/publish/ArrivalPublishScreen";
-import DetailsPublishScreen from "./screens/publish/DetailsPublishScreen";
-import ProfilScreen from "./screens/profil/ProfilScreen";
-import UpdateProfilScreen from "./screens/profil/UpdateProfilScreen";
-import { RootStackParamList } from "./types/type";
-import { getLoginToken } from "./utils/authUtils";
+import ConnexionScreen from "./src/screens/connexion/ConnexionScreen";
+import RegisterScreen from "./src/screens/register/RegisterScreen";
+import RegisterScreen2 from "./src/screens/register/RegisterScreen2";
+import LoginScreen from "./src/screens/login/LoginScreen";
+import HomeScreen from "./src/screens/home/HomeScreen";
+import SearchScreen from "./src/screens/search/SearchScreen";
+import DeparturePublishScreen from "./src/screens/publish/DeparturePublishScreen";
+import ArrivalPublishScreen from "./src/screens/publish/ArrivalPublishScreen";
+import DetailsPublishScreen from "./src/screens/publish/DetailsPublishScreen";
+import { RootStackParamList } from "./src/types/type";
+import ProfilScreen from "./src/screens/profil/ProfilScreen";
+import UpdateProfilScreen from "./src/screens/profil/UpdateProfilScreen";
+import { getLoginToken } from "./src/utils/authUtils";
 import axios from "axios";
 
 const Tab = createBottomTabNavigator();
@@ -86,10 +87,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    checkLoginToken();
-  }, []);
-
   const checkLoginToken = async () => {
     try {
       const loginToken = await getLoginToken();
@@ -118,6 +115,8 @@ export default function App() {
       setIsLoading(false);
     }
   };
+
+  checkLoginToken();
 
   if (isLoading) {
     return <View className="flex-1 bg-zinc-800" />;
