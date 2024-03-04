@@ -5,6 +5,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { RootStackParamList } from "../../types/type";
+import { getLoginToken } from "../../utils/authUtils";
+import axios from "axios";
 
 type DetailsPublishScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,10 +25,9 @@ type Props = {
 
 const DetailsPublishScreen = ({ route, navigation }: Props) => {
   const { depart, arrival } = route.params;
-  console.log(depart, arrival);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedNbPassengers, setSelectedNbPassengers] = useState("1");
-  console.log(selectedDate, selectedNbPassengers);
+  const [loginToken, setLoginToken] = useState("");
 
   const [inputIconsColor, setInputIconsColor] = useState("lightslategrey");
 
@@ -37,10 +38,79 @@ const DetailsPublishScreen = ({ route, navigation }: Props) => {
     }
   };
 
-  const handleContinue = () => {
-    // TODO
-    // -> Send the data to the DB
-    // -> Redirect to another page (confirmation page, home page, ... idk yet)
+  const fetchLoginToken = async () => {
+    const token = await getLoginToken();
+    setLoginToken(token || "");
+  }
+
+  const convertCityToCoordinates = async (city: string) => {
+    try {
+      const endpointGeocoding = `https://api-adresse.data.gouv.fr/search/?q=${city}&limit=1`;
+      const resGeocoding = await axios.get(endpointGeocoding);
+
+      if (resGeocoding.status === 200) {
+        return {
+          latitude: resGeocoding.data.features[0].geometry.coordinates[1],
+          longitude: resGeocoding.data.features[0].geometry.coordinates[0],
+        };
+      }
+    } catch (error: any) {
+      console.debug(
+        "Failed to convert city to coordinates:",
+        error.response?.data?.error || error.message
+      );
+    }
+  }
+
+  const getTimeFromDate = (date: Date) => {
+    return date.toISOString().split("T")[1].split(":").slice(0, 2).join(":");
+  }
+
+  const getDate = (date: Date) => {
+    return date.toISOString().split("T")[0];
+  }
+
+  const constructTrip = async () => {
+    const startLocation = await convertCityToCoordinates(depart);
+    const endLocation = await convertCityToCoordinates(arrival);
+    const date = getDate(selectedDate);
+    const startTime = getTimeFromDate(selectedDate);
+    const endTime = getTimeFromDate(new Date(selectedDate.getTime() + 60 * 60 * 1000));
+    const passengers = parseInt(selectedNbPassengers);
+
+    return {
+      latitudeStartLocation: startLocation?.latitude,
+      longitudeStartLocation: startLocation?.longitude,
+      latitudeEndLocation: endLocation?.latitude,
+      longitudeEndLocation: endLocation?.longitude,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+      seats: passengers,
+    };
+  }
+
+  const handleContinue = async () => {
+    try {
+      await fetchLoginToken();
+      const endpointCreateTrip = process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/trips";
+      const body = await constructTrip();
+      const resCreateTrip = await axios.post(endpointCreateTrip, body, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      });
+      if (resCreateTrip.status === 201) {
+        console.debug("Trip created:", resCreateTrip.data);
+        navigation.navigate("StatusPublish", { status: "Trajet créé" });
+      }
+    } catch (error: any) {
+      navigation.navigate("StatusPublish", { status: "Erreur" });
+      console.debug(
+        "Failed to create trip:",
+        error.response?.data?.error || error.message
+      );
+    }
   };
 
   return (

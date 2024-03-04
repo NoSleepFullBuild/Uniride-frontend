@@ -70,6 +70,7 @@ const LoginScreen = ({ navigation }: Props) => {
       if (!response.data.data.token)
         return setRequestError("Identifiants invalides");
       if (response.data.data.token) {
+        console.debug("Login success: ", response.data.data.token);
         storeLoginToken(response.data.data.token);
         navigation.replace("Home");
       }
