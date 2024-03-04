@@ -16,6 +16,7 @@ import SearchScreen from "./src/screens/search/SearchScreen";
 import DeparturePublishScreen from "./src/screens/publish/DeparturePublishScreen";
 import ArrivalPublishScreen from "./src/screens/publish/ArrivalPublishScreen";
 import DetailsPublishScreen from "./src/screens/publish/DetailsPublishScreen";
+import StatusPublishScreen from "./src/screens/publish/StatusPublishScreen";
 import { RootStackParamList } from "./src/types/type";
 import ProfilScreen from "./src/screens/profil/ProfilScreen";
 import UpdateProfilScreen from "./src/screens/profil/UpdateProfilScreen";
@@ -147,6 +148,7 @@ export default function App() {
             name="DetailsPublish"
             component={DetailsPublishScreen}
           />
+          <Stack.Screen name="StatusPublish" component={StatusPublishScreen} />
           <Stack.Screen name="Profil" component={ProfilScreen} />
           <Stack.Screen name="UpdateProfil" component={UpdateProfilScreen} />
         </Stack.Navigator>

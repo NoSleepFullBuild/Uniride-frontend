@@ -23,6 +23,9 @@ export type RootStackParamList = {
     depart: string;
     arrival: string;
   };
+  StatusPublish: {
+    status: string;
+  };
   Profil: undefined;
   UpdateProfil: undefined;
 };

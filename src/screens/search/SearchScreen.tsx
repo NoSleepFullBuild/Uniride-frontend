@@ -3,8 +3,10 @@ import { View, Text, ActivityIndicator, FlatList } from "react-native";
 import SearchBar from "../../components/searchBar/SearchBar";
 import { RouteProp } from "@react-navigation/native";
 import SearchCard from "../../components/searchCard/searchCard";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import { RootStackParamList, Traject } from "../../types/type";
+import { getLoginToken } from "../../utils/authUtils";
 
 type SearchScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -18,54 +20,46 @@ type SearchScreenProps = {
   navigation: SearchScreenNavigationProp;
 };
 
-const MAX_RESULTS = 40; // Simule une limite maximale de résultats
-
 const SearchScreen = ({ route, navigation }: SearchScreenProps) => {
   const { searchParams } = route.params;
-  // Explicitly type the state with the Traject type
   const [searchResults, setSearchResults] = useState<Traject[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
-  const [page, setPage] = useState(0); // Simulate pagination
+  const [isLoading, setIsLoading] = useState(true);
+  const [loginToken, setLoginToken] = useState("");
 
-  // Simulate an API call to fetch results
-  const fetchSearchResults = useCallback(async () => {
-    if (isFetching) return;
-
-    setIsFetching(true);
-
-    // Fetch the next batch of results here. This is where we add the logic to retrieve more results from our backend or API.
-    // For example, we could pass the length of searchResults as an offset to our backend.
-
-    // Mock delay to simulate network request
-    setTimeout(() => {
-      const startId = searchResults.length;
-      const newResults = Array.from({ length: 10 }, (_, index) => ({
-        id: startId + index,
-      }));
-
-      if (searchResults.length < MAX_RESULTS) {
-        setSearchResults((prevResults) => [
-          ...prevResults,
-          ...newResults.slice(0, MAX_RESULTS - searchResults.length),
-        ]);
-      }
-
-      setIsFetching(false);
-      setPage((prevPage) => prevPage + 1);
-    }, 1500);
-  }, [isFetching, searchResults]);
+  const fetchLoginToken = async () => {
+    const token = await getLoginToken();
+    setLoginToken(token || "");
+  }
 
   useEffect(() => {
-    // To avoid fetching results on initial render, we only fetch results when the searchResults array is empty.
-    if (!isFetching && searchResults.length === 0) {
-      fetchSearchResults();
-    }
-  }, [fetchSearchResults]);
+    fetchLoginToken();
+  }, []);
 
-  const renderFooter = () => {
-    if (!isFetching) return null;
-    return <ActivityIndicator size="large" color="#0000ff" />;
-  };
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const endpoint = process.env.EXPO_PUBLIC_GATEWAY_URL + "/api/gateway/trips";
+        const response = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        });
+
+        if (response.status !== 200) {
+          console.error("Failed to fetch search results:", response.data.error);
+          return;
+        }
+
+        setSearchResults(response.data.items[0]);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTrips();
+  }, []);
 
   return (
     <View className="flex-1 bg-zinc-950">
@@ -77,25 +71,18 @@ const SearchScreen = ({ route, navigation }: SearchScreenProps) => {
           year: "numeric",
         })}
       </Text>
-      <FlatList
-        data={searchResults}
-        renderItem={({ item }) => <SearchCard />}
-        keyExtractor={(item) => item.id.toString()}
-        onEndReached={fetchSearchResults}
-        onEndReachedThreshold={2}
-        ListFooterComponent={renderFooter}
-        bounces={false}
-      />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <FlatList
+          data={searchResults}
+          renderItem={({ item }) => <SearchCard />}
+          keyExtractor={(item) => item.id.toString()}
+          bounces={false}
+        />
+      )}
     </View>
   );
 };
-
-async function loadMoreTrajects(offset): Promise<any> {
-  // Replace this with our actual API call or logic to load more data.
-  // The offset parameter can be used to fetch the correct slice of data.
-  // Return an empty array when there are no more results.
-  // Example API call:
-  // return fetch(`your-api-endpoint/trajects?offset=${offset}`).then(res => res.json());
-}
 
 export default SearchScreen;
